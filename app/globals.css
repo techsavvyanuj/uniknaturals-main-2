@@ -1,0 +1,652 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@400;700&display=swap');
+
+:root {
+  --background: #ffffff;
+  --foreground: #121212;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #121212;
+  padding-top: 0;
+  position: relative;
+}
+
+/* Hide scrollbar while keeping scroll functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Navigation hover effects */
+.nav-link-hover {
+  position: relative;
+  padding-bottom: 2px;
+  transition: all 0.3s ease;
+}
+
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+/* Enhanced hover animation for navigation */
+@keyframes navLinkHover {
+  0% { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+
+.nav-underline {
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.group:hover .nav-underline {
+  animation: navLinkHover 0.3s forwards;
+}
+
+/* Announcement bar styling */
+.announcement-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  height: 25px; /* Reduced height from 30px to 25px */
+}
+
+/* Header positioning to be below announcement bar */
+header.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 40;
+}
+
+/* Adjust body padding to account for fixed header and announcement */
+.body-with-announcement {
+  padding-top: 100px; /* Reduced from 110px to account for smaller header and announcement bar */
+}
+
+/* Main content positioning */
+main {
+  position: relative;
+  z-index: 10;
+  margin-top: 0; /* Reset margin as each section will handle its own spacing */
+  padding-top: 0; /* Reset padding as each section will handle its own spacing */
+}
+
+@layer components {
+  .container {
+    @apply mx-auto px-4 max-w-7xl;
+  }
+  
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-sage hover:bg-sage/90 transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-md;
+  }
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-sage text-base font-medium rounded-md text-sage bg-transparent hover:bg-sage hover:text-white transition-all duration-300 ease-in-out hover:shadow-md;
+  }
+  
+  .section {
+    @apply py-12 md:py-16;
+  }
+  
+  .section-cream {
+    @apply bg-cream py-12 md:py-16;
+  }
+  
+  .section-beige {
+    @apply bg-beige py-12 md:py-16;
+  }
+  
+  .section-ash {
+    @apply bg-ash-gray py-12 md:py-16;
+  }
+}
+
+/* Header animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* New animations for hero and product sections */
+@keyframes zoomIn {
+  from { transform: scale(1.05); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes floatIn {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes rotateIn {
+  0% { transform: rotate(-5deg) scale(0.9); opacity: 0; }
+  100% { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+/* Announcement bar marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.4s ease-out;
+}
+
+.animate-slideRight {
+  animation: slideRight 0.3s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.5s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-zoomIn {
+  animation: zoomIn 1.2s ease-out;
+}
+
+.animate-floatIn {
+  animation: floatIn 0.7s ease-out;
+}
+
+.animate-rotateIn {
+  animation: rotateIn 0.7s ease-out;
+}
+
+/* Staggered animation delays */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+  }
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Hover effects */
+.hover-grow {
+  transition: transform 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.03);
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Image zoom hover effect */
+.img-zoom-container {
+  overflow: hidden;
+}
+
+.img-zoom {
+  transition: transform 0.5s ease;
+}
+
+.img-zoom:hover {
+  transform: scale(1.05);
+}
+
+/* Enhanced video player styles */
+.video-hover-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.video-hover-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.video-hover-container:hover video {
+  transform: scale(1.05);
+}
+
+/* Video loading animation */
+.video-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.video-loading::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Video playing indicator */
+.video-playing::before {
+  content: '';
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  background-color: #e53e3e;
+  border-radius: 50%;
+  z-index: 10;
+  animation: pulse 1s infinite;
+}
+
+/* Video play button */
+.video-play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.video-play-btn::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 0 10px 16px;
+  border-color: transparent transparent transparent #333;
+  margin-left: 5px;
+}
+
+.video-hover-container:hover .video-play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Fix for Safari video playback */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
+/* Mobile fixes */
+@media screen and (max-width: 767px) {
+  /* Convert horizontal scrolling sections to vertical layout */
+  .md\:hidden.w-full.overflow-x-auto.pb-6.hide-scrollbar {
+    overflow-x: visible !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .md\:hidden.w-full.overflow-x-auto.pb-6.hide-scrollbar .flex.space-x-4.px-4.min-w-max {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .md\:hidden.w-full.overflow-x-auto.pb-6.hide-scrollbar .flex.space-x-4.px-4.min-w-max > div {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  /* Fix for hero images on mobile */
+  .relative.h-\[40vh\].md\:h-\[50vh\].bg-beige.overflow-hidden,
+  .relative.h-\[30vh\].bg-secondary.overflow-hidden,
+  .relative.h-\[35vh\].bg-secondary.overflow-hidden,
+  .relative.h-\[40vh\].bg-secondary.overflow-hidden,
+  .relative.h-\[20vh\].md\:h-\[50vh\].bg-beige.overflow-hidden,
+  .relative.h-\[22vh\].md\:h-\[50vh\].bg-beige.overflow-hidden,
+  .relative.h-\[25vh\].md\:h-\[50vh\].bg-beige.overflow-hidden,
+  .hero-banner {
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    max-height: 25vh !important;
+    height: 25vh !important;
+    min-height: 190px !important;
+    max-height: 230px !important;
+  }
+  
+  /* Ensure images don't overflow container */
+  img {
+    max-width: 100% !important;
+  }
+  
+  /* Ensure sections don't cause horizontal overflow */
+  section {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Adjust body to prevent horizontal scrolling */
+body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  /* Fix for the main element */
+  main {
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Additional image container fixes */
+  div[style*="position:relative"] > img,
+  div[style*="position: relative"] > img,
+  span[style*="box-sizing:border-box"] > img {
+    max-width: 100vw !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+  }
+
+  /* Fix for Next.js Image component */
+  span[style*="box-sizing:border-box"],
+  span[style*="overflow:hidden"],
+  span[style*="max-width:100%"] {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Fix for any full-width images and containers */
+  [style*="width:100%"], 
+  [style*="width: 100%"],
+  .w-full {
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  /* Hero banner container fix */
+  section > div.absolute.inset-0 {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Banner content fixes */
+  .hero-banner .bg-white.bg-opacity-80 {
+    padding: 10px !important;
+    width: 80% !important;
+    max-width: 300px !important;
+  }
+  
+  .hero-banner h1 {
+    font-size: 18px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .hero-banner p {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Specific Next.js Image fixes for mobile */
+  .hero-banner span[style*="box-sizing"] {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .hero-banner img,
+  .hero-banner span img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    max-width: 100% !important;
+    transform: scale(1) !important;
+  }
+
+  /* Ensure all elements stay within viewport */
+  * {
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+}
+
+/* Hero banner specific styling */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 135px; /* Decreased to account for smaller header */
+  z-index: 20; /* Ensure it's above the header */
+}
+
+.hero-banner img {
+  object-fit: cover;
+  object-position: center;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* Mobile Hero Banner Image Fixes */
+@media screen and (max-width: 767px) {
+  .mobile-hero-image {
+    transform: scale(1) !important;
+    object-position: center 25% !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  .hero-banner {
+    max-height: 25vh !important;
+    height: 25vh !important;
+    overflow: hidden !important;
+    min-height: 180px !important;
+    max-height: 200px !important;
+    margin-top: 115px !important; /* Decreased to account for smaller header on mobile */
+    z-index: 20 !important; /* Ensure it's above the header */
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+  }
+  
+  /* Ensure hero banners don't overflow horizontally */
+  .hero-banner > div.relative,
+  .hero-banner > div.absolute {
+    height: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  
+  .hero-banner img {
+    max-height: 200px !important;
+    object-position: center 30% !important;
+  }
+  
+  /* Fix hero text on mobile */
+  .hero-banner h1 {
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 5px !important;
+  }
+  
+  .hero-banner p {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+}
+
+/* Fix for cart page to ensure it displays correctly */
+.cart-page {
+  margin-top: 135px !important; /* Decreased margin to match header size */
+  z-index: 30 !important; /* Higher z-index than header */
+  position: relative;
+}
+
+/* Fix for cart dropdown in the header */
+header .cart-dropdown {
+  z-index: 50;
+}
+
+/* For main on cart page to ensure visibility */
+body main {
+  z-index: 20;
+  position: relative;
+}
+
+/* Next.js Image component fixes */
+span[style*="display:block"] {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+span[style*="position:absolute"] {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+}
+
+
