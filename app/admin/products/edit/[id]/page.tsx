@@ -5,16 +5,16 @@ import { useRouter } from 'next/navigation';
 import ProductForm, { ProductFormData } from '../../components/ProductForm';
 import { fetchProductById, updateProduct } from '@/app/api/adminProductsApi';
 
-// Define proper type for App Router page with Promise
-type PageParams = Promise<{ id: string }>;
+// Remove incorrect PageParams type and use correct Next.js convention
+type PageProps = { params: { id: string } };
 
-export default function EditProduct(props: { params: { id: string } }) {
+export default function EditProduct({ params }: PageProps) {
   const [product, setProduct] = useState<ProductFormData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { id } = props.params;
+  const { id } = params;
 
   useEffect(() => {
     setIsLoading(true);
