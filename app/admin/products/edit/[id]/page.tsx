@@ -1,18 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import ProductForm, { ProductFormData } from '../../components/ProductForm';
 import { fetchProductById, updateProduct } from '@/app/api/adminProductsApi';
 
-// Remove incorrect PageProps type and use correct Next.js convention
-export default function EditProduct({ params }: { params: { id: string } }) {
+export default function EditProduct() {
   const [product, setProduct] = useState<ProductFormData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { id } = params;
+  const params = useParams();
+  const id = params.id as string;
 
   useEffect(() => {
     setIsLoading(true);
