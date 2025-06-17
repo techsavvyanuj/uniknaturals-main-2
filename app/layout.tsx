@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Uniknaturals - Natural Hair and Skin Care Products',
-  description: 'Discover high-quality natural hair and skin care products by Uniknaturals. Made with organic ingredients for healthy and beautiful hair and skin.',
+  description: 'Discover high-quality natural hair and skin care products by Uniknaturals. Made with organic ingredients for healthy and beautiful hair.',
   viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'
 };
 
