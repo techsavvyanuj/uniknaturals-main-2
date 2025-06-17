@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:5005/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend-1.onrender.com/api';
 
 export interface AdminProduct {
   _id: string;
