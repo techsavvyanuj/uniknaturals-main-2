@@ -12,7 +12,7 @@ const comboProducts = [
   {
     id: '1',
     name: 'Ultimate Skin Care Bundle',
-    description: 'Complete 4-step routine | Morning & night | All skin types',
+    description: 'Complete 4-step routine | Morning & night | All skin type',
     price: 1699,
     salePrice: 1299,
     image: 'https://abso-essentials.com/cdn/shop/files/Artboard1_4x_7798e9bd-8ba0-4fe1-92b0-e628e9f29332.png?v=1743841720&width=940',
