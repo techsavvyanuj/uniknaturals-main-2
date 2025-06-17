@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
+import { registerAdmin, loginAdmin } from '@/app/api/authApi';
+import { useRouter } from 'next/navigation';
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState('login');
@@ -13,19 +15,42 @@ export default function AccountPage() {
   const [lastName, setLastName] = useState('');
   const [forgotEmail, setForgotEmail] = useState('');
   const [isResetSent, setIsResetSent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('userAuth');
+      if (token) setIsLoggedIn(true);
+    }
+  }, []);
   
   // Handle login form submission
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would make an API call to authenticate
-    console.log('Login with:', email, password);
+    try {
+      const res = await loginAdmin(email, password);
+      setSuccessMessage('Login successful!');
+      setIsLoggedIn(true);
+      localStorage.setItem('userAuth', res.token || '');
+      setTimeout(() => router.push('/account/orders'), 1000);
+    } catch {
+      setSuccessMessage('Login failed. Please check your credentials.');
+    }
   };
   
   // Handle register form submission
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, this would make an API call to register
-    console.log('Register with:', firstName, lastName, email, password);
+    try {
+      const res = await registerAdmin(firstName + ' ' + lastName, email, password);
+      setSuccessMessage('Registration successful! Please log in.');
+      setActiveTab('login');
+      setTimeout(() => router.push('/account'), 1000);
+    } catch {
+      setSuccessMessage('Registration failed. Try again.');
+    }
   };
   
   // Handle forgot password form submission
@@ -35,6 +60,21 @@ export default function AccountPage() {
     console.log('Reset password for:', forgotEmail);
     setIsResetSent(true);
   };
+  
+  if (isLoggedIn) {
+    return (
+      <main>
+        <Header />
+        <div className="container max-w-6xl mx-auto px-4 py-12 mt-16">
+          <div className="max-w-md mx-auto bg-white rounded-lg shadow-sm overflow-hidden p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Welcome, {email || 'User'}!</h2>
+            <p className="mb-4">You are logged in.</p>
+            <Link href="/account/orders" className="text-sage underline">View My Orders</Link>
+          </div>
+        </div>
+      </main>
+    );
+  }
   
   return (
     <main>
@@ -308,9 +348,16 @@ export default function AccountPage() {
                 </button>
               </div>
             )}
+            
+            {/* Show success message if present */}
+            {successMessage && (
+              <div className="bg-green-100 text-green-800 px-4 py-2 text-center mb-4 rounded">
+                {successMessage}
+              </div>
+            )}
           </div>
         </div>
       </div>
     </main>
   );
-} 
+}

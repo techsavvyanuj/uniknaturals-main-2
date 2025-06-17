@@ -5,12 +5,16 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import Image from 'next/image';
 import { useCart } from '@/hooks/useCart';
+import { createOrder } from '../api/ordersApi';
+import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
-	const { items, updateQuantity, removeItem, subtotal } = useCart();
+	const { items, updateQuantity, removeItem, subtotal, clearCart } = useCart();
 	const [couponCode, setCouponCode] = useState('');
 	const [couponApplied, setCouponApplied] = useState(false);
 	const [discount, setDiscount] = useState(0);
+	const [orderStatus, setOrderStatus] = useState<string | null>(null);
+	const router = useRouter();
 
 	// Shipping is free over ₹349
 	const shippingCost = subtotal >= 349 ? 0 : 49;
@@ -35,6 +39,30 @@ export default function CartPage() {
 		setCouponCode('');
 		setDiscount(0);
 		setCouponApplied(false);
+	};
+
+	// Handle checkout
+	const handleCheckout = async () => {
+		const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : '';
+		if (!token) {
+			alert('Please log in to place an order.');
+			router.push('/account');
+			return;
+		}
+		try {
+			setOrderStatus(null);
+			await createOrder({
+				products: items.map(item => ({ product: item.id, quantity: item.quantity })),
+				total,
+				address: 'N/A', // You can add address form later
+				paymentId: 'demo', // Integrate payment gateway for real paymentId
+			}, token);
+			setOrderStatus('Order placed successfully!');
+			// Optionally clear cart here
+			// clearCart();
+		} catch (err) {
+			setOrderStatus('Failed to place order.');
+		}
 	};
 
 	return (
@@ -209,7 +237,12 @@ export default function CartPage() {
 									</div>
 								)}
 
-								<button className="btn w-full py-3 bg-sage text-white rounded hover:bg-sage/80 transition-all">Proceed to Checkout</button>
+								<button className="btn w-full py-3 bg-sage text-white rounded hover:bg-sage/80 transition-all" onClick={handleCheckout}>
+									Proceed to Checkout
+								</button>
+								{orderStatus && (
+									<div className="mt-4 text-center text-sm text-green-600">{orderStatus}</div>
+								)}
 
 								<div className="mt-4">
 									<Link
@@ -251,6 +284,17 @@ export default function CartPage() {
 					</div>
 				)}
 			</div>
+
+			{items.length > 0 && (
+				<div className="mt-6 text-right">
+					<button
+						className="bg-sage text-white px-6 py-2 rounded hover:bg-sage/90"
+						onClick={() => router.push('/cart/checkout')}
+					>
+						Proceed to Checkout
+					</button>
+				</div>
+			)}
 		</main>
 	);
 }

@@ -3,35 +3,43 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { fetchAdminProducts, deleteProduct } from '../../api/adminProductsApi';
 
 // Define product interface
 interface Product {
-  id: string;
+  _id: string;
   name: string;
   price: number;
-  discountedPrice?: number;
-  category: string;
-  stock: number;
+  salePrice?: number;
+  category?: string;
+  stock?: number;
   image: string;
   description: string;
-  featured: boolean;
+  featured?: boolean;
+  longDescription?: string;
+  slug: string;
+  reviewCount?: number;
+  soldOut?: boolean;
+  images?: string[];
+  features?: string[];
 }
 
 // Initial mock product data
 const initialMockProducts: Product[] = [
   {
-    id: '1',
+    _id: '1',
     name: 'Hydrating Face Wash',
     price: 499,
-    discountedPrice: 399,
+    salePrice: 399,
     category: 'Skin Care',
     stock: 25,
     image: '/images/products/face-wash.jpg',
     description: 'A gentle face wash that cleanses and hydrates your skin without stripping away natural oils.',
     featured: true,
+    slug: 'hydrating-face-wash',
   },
   {
-    id: '2',
+    _id: '2',
     name: 'Nourishing Hair Serum',
     price: 599,
     category: 'Hair Care',
@@ -39,9 +47,10 @@ const initialMockProducts: Product[] = [
     image: '/images/products/hair-serum.jpg',
     description: 'Infused with natural oils to provide deep nourishment and shine to your hair.',
     featured: false,
+    slug: 'nourishing-hair-serum',
   },
   {
-    id: '3',
+    _id: '3',
     name: 'Revitalizing Face Toner',
     price: 449,
     category: 'Skin Care',
@@ -49,17 +58,19 @@ const initialMockProducts: Product[] = [
     image: '/images/products/toner.jpg',
     description: 'Alcohol-free toner that balances skin pH and prepares it for better absorption of other products.',
     featured: true,
+    slug: 'revitalizing-face-toner',
   },
   {
-    id: '4',
+    _id: '4',
     name: 'Skin Brightening Cream',
     price: 699,
-    discountedPrice: 599,
+    salePrice: 599,
     category: 'Skin Care',
     stock: 12,
     image: '/images/products/cream.jpg',
     description: 'Helps reduce dark spots and evens skin tone for a brighter complexion.',
     featured: false,
+    slug: 'skin-brightening-cream',
   },
 ];
 
@@ -70,47 +81,25 @@ export default function ProductsManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [statusMessage, setStatusMessage] = useState('');
 
-  // Load products from localStorage or use initial mock data
+  // Load products from API
   useEffect(() => {
-    const loadProducts = () => {
-      try {
-        const savedProducts = localStorage.getItem('adminProducts');
-        if (savedProducts) {
-          setProducts(JSON.parse(savedProducts));
-        } else {
-          // First time - save initial mock data to localStorage
-          localStorage.setItem('adminProducts', JSON.stringify(initialMockProducts));
-          setProducts(initialMockProducts);
-        }
+    setIsLoading(true);
+    fetchAdminProducts()
+      .then(data => {
+        setProducts(data);
         setIsLoading(false);
-      } catch (error) {
-        console.error('Error loading products:', error);
-        setProducts(initialMockProducts);
+      })
+      .catch(() => {
+        setProducts([]);
         setIsLoading(false);
-      }
-    };
-
-    // Simulate API loading delay
-    const timer = setTimeout(() => {
-      loadProducts();
-    }, 800);
-
-    return () => clearTimeout(timer);
+      });
   }, []);
 
-  // Save products to localStorage whenever they change
-  useEffect(() => {
-    if (!isLoading && products.length > 0) {
-      localStorage.setItem('adminProducts', JSON.stringify(products));
-    }
-  }, [products, isLoading]);
-
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      setProducts(products.filter(product => product.id !== id));
+      await deleteProduct(id);
+      setProducts(products.filter(product => product._id !== id));
       setStatusMessage('Product deleted successfully');
-      
-      // Clear status message after 3 seconds
       setTimeout(() => {
         setStatusMessage('');
       }, 3000);
@@ -129,6 +118,15 @@ export default function ProductsManagement() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Products Management</h1>
+      </div>
+
+      <div className="mb-8 flex gap-4">
+        <Link 
+          href="/admin/orders" 
+          className="bg-sage text-white px-4 py-2 rounded hover:bg-opacity-90 transition whitespace-nowrap min-w-[150px] inline-block text-center"
+        >
+          View Orders
+        </Link>
         <Link 
           href="/admin/products/add" 
           className="bg-sage text-white px-4 py-2 rounded hover:bg-opacity-90 transition whitespace-nowrap min-w-[150px] inline-block text-center"
@@ -192,7 +190,7 @@ export default function ProductsManagement() {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {filteredProducts.map(product => (
-                <tr key={product.id} className="hover:bg-gray-50">
+                <tr key={product._id} className="hover:bg-gray-50">
                   <td className="py-3 px-4">
                     <div className="w-16 h-16 relative">
                       <Image 
@@ -215,7 +213,7 @@ export default function ProductsManagement() {
                   <td className="py-3 px-4">{product.name}</td>
                   <td className="py-3 px-4">{product.category}</td>
                   <td className="py-3 px-4">₹{product.price}</td>
-                  <td className="py-3 px-4">{product.discountedPrice ? `₹${product.discountedPrice}` : '-'}</td>
+                  <td className="py-3 px-4">{product.salePrice ? `₹${product.salePrice}` : '-'}</td>
                   <td className="py-3 px-4">{product.stock}</td>
                   <td className="py-3 px-4">
                     {product.featured ? (
@@ -227,13 +225,13 @@ export default function ProductsManagement() {
                   <td className="py-3 px-4">
                     <div className="flex space-x-2">
                       <Link 
-                        href={`/admin/products/edit/${product.id}`}
+                        href={`/admin/products/edit/${product._id}`}
                         className="text-blue-600 hover:text-blue-800"
                       >
                         Edit
                       </Link>
                       <button 
-                        onClick={() => handleDelete(product.id)}
+                        onClick={() => handleDelete(product._id)}
                         className="text-red-600 hover:text-red-800"
                       >
                         Delete

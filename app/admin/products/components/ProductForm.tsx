@@ -13,6 +13,7 @@ export interface ProductFormData {
   category: string;
   image: string;
   featured: boolean;
+  slug: string; // Add slug to form data
 }
 
 interface ProductFormProps {
@@ -29,6 +30,7 @@ const defaultProduct: ProductFormData = {
   category: '',
   image: '',
   featured: false,
+  slug: '',
 };
 
 export default function ProductForm({ initialData, onSubmit, isSubmitting }: ProductFormProps) {
@@ -43,13 +45,25 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
     }
   }, [initialData]);
 
+  const generateSlug = (name: string) =>
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'number' ? parseFloat(value) : value,
-    }));
+    setFormData(prev => {
+      const updated = {
+        ...prev,
+        [name]: type === 'number' ? parseFloat(value) : value,
+      };
+      // If name changes, update slug
+      if (name === 'name') {
+        updated.slug = generateSlug(value);
+      }
+      return updated;
+    });
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,20 +95,18 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    
     if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.slug.trim()) newErrors.slug = 'Slug is required';
     if (!formData.description.trim()) newErrors.description = 'Description is required';
     if (formData.price <= 0) newErrors.price = 'Price must be greater than 0';
     if (formData.stock < 0) newErrors.stock = 'Stock cannot be negative';
     if (!formData.category) newErrors.category = 'Category is required';
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (validateForm()) {
       onSubmit(formData);
     }
@@ -262,4 +274,4 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
       </div>
     </form>
   );
-} 
+}

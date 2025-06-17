@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { loginAdmin } from '@/app/api/authApi';
 
 interface AdminAuthContextType {
   isAuthenticated: boolean;
@@ -30,23 +31,21 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
-    
     try {
-      // In a real app, this would be an API call
-      if (email === 'admin@uniknaturals.com' && password === 'admin123') {
-        localStorage.setItem('adminAuth', 'true');
-        
-        // Also set a cookie for the middleware
-        document.cookie = `adminAuth=true; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 days
-        
+      const res = await loginAdmin(email, password);
+      if (res.token) {
+        localStorage.setItem('adminAuth', res.token);
+        document.cookie = `adminAuth=${res.token}; path=/; max-age=${60 * 60 * 24 * 7}`;
         setIsAuthenticated(true);
         setIsLoading(false);
         return true;
+      } else {
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        return false;
       }
-      setIsLoading(false);
-      return false;
     } catch (error) {
-      console.error('Login error:', error);
+      setIsAuthenticated(false);
       setIsLoading(false);
       return false;
     }
@@ -84,4 +83,4 @@ export function useAdminAuth() {
   }
   
   return context;
-} 
+}

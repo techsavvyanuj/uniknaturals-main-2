@@ -1,109 +1,110 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
+import { fetchProducts, Product } from '../api/productsApi';
 
 // Sample product data (in a real app, this would come from an API/backend)
-const products = [
-  {
-    id: '1',
-    name: 'Hair Gel Mask',
-    description: 'Repairs split ends | restores shine, | smooths frizz | Reduces hair fall',
-    price: 1099,
-    salePrice: 1049,
-    image: '/images/products/hair gel mask.jpeg',
-    slug: 'hair-care-combo',
-    reviewCount: 22,
-    soldOut: false,
-    category: 'combo'
-  },
-  {
-    id: '2',
-    name: 'Rosemary Shampoo',
-    description: 'Sulfate-Free | Strengthens hair | Renews shine | Hair Strengthening',
-    price: 649,
-    salePrice: 599,
-    image: '/images/products/rosemary shampoo.jpeg',
-    slug: 'Rosemary Shampoo',
-    reviewCount: 122,
-    soldOut: false,
-    category: 'hair'
-  },
-  {
-    id: '3',
-    name: 'Sunscreen Body Lotion',
-    description: 'Non-toxic | mineral-based SPF  | zinc oxide and aloevera ',
-    price: 459,
-    salePrice: 436,
-    image: '/images/products/body lotion.jpeg',
-    slug: 'barrier-repair-moisturizer',
-    reviewCount: 68,
-    soldOut: false,
-    category: 'skin'
-  },
-  {
-    id: '4',
-    name: 'Natural Rose Soap',
-    description: 'Gentle Hydration & Skin Soothing | Cleanses skin without stripping natural oil',
-    price: 549,
-    salePrice: 522,
-    image: '/images/products/soaps.jpeg',
-    slug: 'hydrating-bodywash',
-    reviewCount: 65,
-    soldOut: false,
-    category: 'body'
-  },
-  {
-    id: '5',
-    name: 'Rosemary Spray',
-    description: 'Tames frizz | Reduces fragility | Smoothens texture',
-    price: 549,
-    salePrice: 522,
-    image: '/images/products/rose mary spray.jpeg',
-    slug: 'nourishing-conditioner',
-    reviewCount: 82,
-    soldOut: false,
-    category: 'hair'
-  },
-  {
-    id: '6',
-    name: 'Rosemary Water Hair Spray',
-    description: 'Infused with pure rosemary leaves | Lightweight formula | non-sticky and ideal for daily use',
-    price: 299,
-    salePrice: 249,
-    image: '/images/products/rosewater.jpeg',
-    slug: 'scalp-massager',
-    reviewCount: 1,
-    soldOut: false,
-    category: 'accessories'
-  },
-  {
-    id: '7',
-    name: 'Cold-Pressed Herbal Hair Oil',
-    description: 'Contains cold-pressed coconut | Boosts hair growth| reduces hair fal | Evens skin tone',
-    price: 1499,
-    salePrice: 1424,
-    image: '/images/products/herbel hair oil.jpeg',
-    slug: 'shower-routine-combo',
-    reviewCount: 2,
-    soldOut: false,
-    category: 'combo'
-  },
-  {
-    id: '8',
-    name: 'Anti Acne Facewash',
-    description: 'Reinforces skin barrier | Ultra hydrating | Anti - ageing',
-    price: 999,
-    salePrice: 949,
-    image: '/images/products/fashwash.jpeg',
-    slug: 'skin-care-combo',
-    reviewCount: 1,
-    soldOut: false,
-    category: 'combo'
-  }
-];
+// const products = [
+//   {
+//     id: '1',
+//     name: 'Hair Gel Mask',
+//     description: 'Repairs split ends | restores shine, | smooths frizz | Reduces hair fall',
+//     price: 1099,
+//     salePrice: 1049,
+//     image: '/images/products/hair gel mask.jpeg',
+//     slug: 'hair-care-combo',
+//     reviewCount: 22,
+//     soldOut: false,
+//     category: 'combo'
+//   },
+//   {
+//     id: '2',
+//     name: 'Rosemary Shampoo',
+//     description: 'Sulfate-Free | Strengthens hair | Renews shine | Hair Strengthening',
+//     price: 649,
+//     salePrice: 599,
+//     image: '/images/products/rosemary shampoo.jpeg',
+//     slug: 'Rosemary Shampoo',
+//     reviewCount: 122,
+//     soldOut: false,
+//     category: 'hair'
+//   },
+//   {
+//     id: '3',
+//     name: 'Sunscreen Body Lotion',
+//     description: 'Non-toxic | mineral-based SPF  | zinc oxide and aloevera ',
+//     price: 459,
+//     salePrice: 436,
+//     image: '/images/products/body lotion.jpeg',
+//     slug: 'barrier-repair-moisturizer',
+//     reviewCount: 68,
+//     soldOut: false,
+//     category: 'skin'
+//   },
+//   {
+//     id: '4',
+//     name: 'Natural Rose Soap',
+//     description: 'Gentle Hydration & Skin Soothing | Cleanses skin without stripping natural oil',
+//     price: 549,
+//     salePrice: 522,
+//     image: '/images/products/soaps.jpeg',
+//     slug: 'hydrating-bodywash',
+//     reviewCount: 65,
+//     soldOut: false,
+//     category: 'body'
+//   },
+//   {
+//     id: '5',
+//     name: 'Rosemary Spray',
+//     description: 'Tames frizz | Reduces fragility | Smoothens texture',
+//     price: 549,
+//     salePrice: 522,
+//     image: '/images/products/rose mary spray.jpeg',
+//     slug: 'nourishing-conditioner',
+//     reviewCount: 82,
+//     soldOut: false,
+//     category: 'hair'
+//   },
+//   {
+//     id: '6',
+//     name: 'Rosemary Water Hair Spray',
+//     description: 'Infused with pure rosemary leaves | Lightweight formula | non-sticky and ideal for daily use',
+//     price: 299,
+//     salePrice: 249,
+//     image: '/images/products/rosewater.jpeg',
+//     slug: 'scalp-massager',
+//     reviewCount: 1,
+//     soldOut: false,
+//     category: 'accessories'
+//   },
+//   {
+//     id: '7',
+//     name: 'Cold-Pressed Herbal Hair Oil',
+//     description: 'Contains cold-pressed coconut | Boosts hair growth| reduces hair fal | Evens skin tone',
+//     price: 1499,
+//     salePrice: 1424,
+//     image: '/images/products/herbel hair oil.jpeg',
+//     slug: 'shower-routine-combo',
+//     reviewCount: 2,
+//     soldOut: false,
+//     category: 'combo'
+//   },
+//   {
+//     id: '8',
+//     name: 'Anti Acne Facewash',
+//     description: 'Reinforces skin barrier | Ultra hydrating | Anti - ageing',
+//     price: 999,
+//     salePrice: 949,
+//     image: '/images/products/fashwash.jpeg',
+//     slug: 'skin-care-combo',
+//     reviewCount: 1,
+//     soldOut: false,
+//     category: 'combo'
+//   }
+// ];
 
 const categories = [
   { id: 'all', name: 'All Products' },
@@ -115,9 +116,18 @@ const categories = [
 ];
 
 export default function Shop() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const [sortBy, setSortBy] = useState('featured');
-  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts().then(data => {
+      setProducts(data);
+      setLoading(false);
+    });
+  }, []);
+
   const filteredProducts = activeCategory === 'all'
     ? products
     : products.filter(product => product.category === activeCategory);
@@ -189,13 +199,19 @@ export default function Shop() {
         </div>
         
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {sortedProducts.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">Loading products...</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {sortedProducts.map((product) => (
+              <ProductCard key={product.id} {...product} />
+            ))}
+          </div>
+        )}
         
-        {sortedProducts.length === 0 && (
+        {sortedProducts.length === 0 && !loading && (
           <div className="text-center py-12">
             <p className="text-gray-500">No products found in this category.</p>
           </div>
@@ -203,4 +219,4 @@ export default function Shop() {
       </div>
     </>
   );
-} 
+}
