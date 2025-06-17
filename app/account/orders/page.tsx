@@ -9,7 +9,8 @@ export default function OrderHistoryPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('adminAuth');
+    // Use userAuth for user orders, not adminAuth
+    const token = localStorage.getItem('userAuth');
     if (!token) {
       setError('Not authenticated');
       setLoading(false);

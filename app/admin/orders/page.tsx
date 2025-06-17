@@ -1,3 +1,4 @@
+"use client";
 
 import { use, useEffect, useState } from 'react';
 import { fetchAllOrders, updateOrderStatus } from '@/app/api/orderHistoryApi';
