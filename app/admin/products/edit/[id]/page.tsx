@@ -19,22 +19,35 @@ export default function EditProduct() {
     setError(null);
     fetchProductById(id)
       .then(data => {
-        // Map backend product to ProductFormData
+        if (!data || !data._id) {
+          setError('Product not found. It may have been deleted.');
+          setIsLoading(false);
+          // Optionally redirect after a short delay
+          setTimeout(() => router.push('/admin/products'), 2000);
+          return;
+        }
         setProduct({
           id: data._id,
           name: data.name,
           description: data.description,
           price: data.price,
+          salePrice: data.salePrice || 0,
           stock: data.stock || 0,
           category: data.category || '',
           image: data.image,
           featured: !!data.featured,
           slug: data.slug || '',
+          images: data.images || [],
         });
         setIsLoading(false);
       })
-      .catch(() => {
-        setError('Failed to load product');
+      .catch((err) => {
+        if (err?.response?.status === 404) {
+          setError('Product not found. It may have been deleted.');
+          setTimeout(() => router.push('/admin/products'), 2000);
+        } else {
+          setError('Failed to load product');
+        }
         setIsLoading(false);
       });
   }, [id]);

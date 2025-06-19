@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:5005/api';
 
 export interface Product {
   id: string;
@@ -18,8 +18,11 @@ export interface Product {
   features?: string[];
 }
 
-export const fetchProducts = async (): Promise<Product[]> => {
-  const res = await axios.get(`${API_BASE}/products`);
+export const fetchProducts = async (category?: string): Promise<Product[]> => {
+  const url = category
+    ? `${API_BASE}/products?category=${encodeURIComponent(category)}`
+    : `${API_BASE}/products`;
+  const res = await axios.get(url);
   return res.data;
 };
 

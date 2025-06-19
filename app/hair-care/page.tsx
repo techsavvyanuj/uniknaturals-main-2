@@ -8,144 +8,6 @@ import ProductCard from '@/components/ProductCard';
 import HeroBanner from '@/components/HeroBanner';
 import { fetchProducts, Product } from '@/app/api/productsApi';
 
-// Sample hair care products data (in a real app, this would come from an API/backend)
-// const hairCareProducts = [
-// 	{
-// 		id: '1',
-// 		name: 'Rosemary Shampoo',
-// 		description: 'Sulfate-Free | Strengthens hair | Renews shine | Hair Strengthening',
-// 		price: 649,
-// 		salePrice: 599,
-// 		image: '/images/products/rosemary shampoo.jpeg',
-// 		slug: 'strengthening-shampoo',
-// 		reviewCount: 122,
-// 		soldOut: false,
-// 		category: 'Shampoo',
-// 		concern: ['Hair Fall', 'Damaged Hair'],
-// 		tags: ['Bestseller']
-// 	},
-// 	{
-// 		id: '2',
-// 		name: 'Hair Gel Mask',
-// 		description: 'Repairs split ends | restores shine, | smooths frizz | Reduces hair fall',
-// 		price: 599,
-// 		salePrice: 549,
-// 		image: '/images/products/hair gel mask.jpeg',
-// 		slug: 'Hair Gel Mask',
-// 		reviewCount: 84,
-// 		soldOut: false,
-// 		category: 'Gel Mask',
-// 		concern: ['Dry Hair', 'Frizzy Hair'],
-// 		tags: ['Popular']
-// 	},
-// 	{
-// 		id: '3',
-// 		name: 'Cold-Pressed Herbal Hair Oil',
-// 		description: 'Contains cold-pressed coconut | Boosts hair growth| reduces hair fal | Evens skin tone',
-// 		price: 699,
-// 		salePrice: undefined, // changed from null to undefined
-// 		image: '/images/products/herbel hair oil.jpeg',
-// 		slug: 'Cold-Pressed Herbal Hair Oil',
-// 		reviewCount: 56,
-// 		soldOut: false,
-// 		category: 'Herbal Hair Oil',
-// 		concern: ['Damaged Hair', 'Dry Hair']
-// 	},
-// 	{
-// 		id: '4',
-// 		name: 'Pure Rosemary Essential Oil',
-// 		description: '100% undiluted steam-distilled rosemary oil | Encourages hair growth |  improves focus',
-// 		price: 749,
-// 		salePrice: 699,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/shower_combo_4x_8a72d7c0-6ca0-49cc-ad5e-d5cf191feb46.png?v=1743841891&width=940',
-// 		slug: 'Pure Rosemary Essential Oil',
-// 		reviewCount: 42,
-// 		soldOut: false,
-// 		category: 'Rosemary Essential Oil',
-// 		concern: ['Oily Scalp', 'Dandruff']
-// 	},
-// 	{
-// 		id: '5',
-// 		name: ' Natural Hair Spa Cream',
-// 		description: 'Deep Conditioning Treatment | Blended with rosemary | Repairs damaged strands',
-// 		price: 899,
-// 		salePrice: 849,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/shower_combo-21.jpg?v=1743842537&width=940',
-// 		slug: 'hair-growth-serum',
-// 		reviewCount: 68,
-// 		soldOut: false,
-// 		category: 'Serum',
-// 		concern: ['Hair Fall', 'Thin Hair'],
-// 		tags: ['New']
-// 	},
-// 	{
-// 		id: '6',
-// 		name: 'Natural Lemon Soap',
-// 		description: 'Brightening & Antibacterial Cleanser | Made with real lemon  peel oil  ',
-// 		price: 549,
-// 		salePrice: 522,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/bodywash_4x_2634efb5-8a92-4bf4-8a54-0e54cfca5b63.png?v=1732365058&width=533',
-// 		slug: 'Natural Lemon Soap',
-// 		reviewCount: 65,
-// 		soldOut: false,
-// 		category: 'Body Wash',
-// 		concern: ['Dry Skin', 'Sensitivity']
-// 	},
-// 	{
-// 		id: '7',
-// 		name: 'Anti-Frizz Hair Oil',
-// 		description: 'Controls frizz | Adds shine | Smooths hair',
-// 		price: 649,
-// 		salePrice: 599,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/3_in_1_4x_b26c9835-68d9-4259-b320-ff36c95003e6.png?v=1743842537&width=940',
-// 		slug: 'anti-frizz-hair-oil',
-// 		reviewCount: 34,
-// 		soldOut: false,
-// 		category: 'Hair Oil',
-// 		concern: ['Frizzy Hair', 'Damaged Hair']
-// 	},
-// 	{
-// 		id: '8',
-// 		name: 'Scalp Massager',
-// 		description: 'Improves blood circulation | Cleanses scalp thoroughly',
-// 		price: 299,
-// 		salePrice: 249,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/1_4x_1990d46d-2c96-4d49-a6b2-12459a0acd3c.png?v=1733732673&width=940',
-// 		slug: 'scalp-massager',
-// 		reviewCount: 92,
-// 		soldOut: false,
-// 		category: 'Accessory',
-// 		concern: ['Oily Scalp', 'Dandruff', 'Hair Fall'],
-// 		tags: ['Trending']
-// 	},
-// 	{
-// 		id: '9',
-// 		name: 'Dry Shampoo',
-// 		description: 'Absorbs excess oil | Adds volume | Refreshes hair ',
-// 		price: 399,
-// 		salePrice: 369,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/shampoo_1_4x_f97c984e-c472-4f8c-872d-7e0763f74571.png?v=1732369710',
-// 		slug: 'dry-shampoo',
-// 		reviewCount: 29,
-// 		soldOut: false,
-// 		category: 'Shampoo',
-// 		concern: ['Oily Scalp', 'Limp Hair']
-// 	},
-// 	{
-// 		id: '10',
-// 		name: 'Heat Protectant Spray',
-// 		description: 'Shields hair from heat | Prevents damage | Adds shine | Reduces frizz',
-// 		price: 499,
-// 		salePrice: 469,
-// 		image: 'https://abso-essentials.com/cdn/shop/files/mini_conditioner_02.jpg?v=1742231923&width=940',
-// 		slug: 'heat-protectant-spray',
-// 		reviewCount: 47,
-// 		soldOut: false,
-// 		category: 'Treatment',
-// 		concern: ['Damaged Hair', 'Frizzy Hair', 'Heat Styling']
-// 	}
-// ];
-
 export default function HairCarePage() {
 	const [products, setProducts] = useState<Product[]>([]);
 	const [loading, setLoading] = useState(true);
@@ -153,9 +15,11 @@ export default function HairCarePage() {
 	const [visibleProducts, setVisibleProducts] = useState(9);
 
 	useEffect(() => {
-		fetchProducts()
+		fetchProducts('Hair Care')
 			.then(data => {
-				setProducts(data.filter((p: Product) => (p.category || '').toLowerCase() === 'hair care'));
+				// Map _id to id for compatibility with ProductCard
+				const mapped = data.map((p: any) => ({ ...p, id: p._id || p.id }));
+				setProducts(mapped);
 				setLoading(false);
 			})
 			.catch(() => {

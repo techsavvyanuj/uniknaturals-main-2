@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchMyOrders } from '@/app/api/orderHistoryApi';
+import Image from 'next/image';
 
 export default function OrderHistoryPage() {
   const [orders, setOrders] = useState<any[]>([]);
@@ -36,24 +37,56 @@ export default function OrderHistoryPage() {
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        <table className="min-w-full bg-white rounded-lg overflow-hidden">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="py-3 px-4 text-left">Order ID</th>
-              <th className="py-3 px-4 text-left">Total</th>
-              <th className="py-3 px-4 text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {orders.map(order => (
-              <tr key={order._id}>
-                <td className="py-3 px-4">{order._id}</td>
-                <td className="py-3 px-4">₹{order.total}</td>
-                <td className="py-3 px-4">{order.status || 'Placed'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="space-y-8">
+          {orders.map(order => (
+            <div key={order._id} className="bg-white rounded-lg shadow p-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <div className="font-semibold text-lg mb-1">Order ID: {order._id}</div>
+                  <div className="text-gray-600 text-sm mb-1">Placed on: {order.createdAt ? new Date(order.createdAt).toLocaleString() : ''}</div>
+                  <div className="text-gray-600 text-sm mb-1">Status: {order.status || 'Placed'}</div>
+                  <div className="text-gray-600 text-sm mb-1">Payment ID: {order.paymentId || 'N/A'}</div>
+                  <div className="text-gray-600 text-sm mb-1">Total Paid: <span className="font-bold">₹{order.total}</span></div>
+                </div>
+                <div className="mt-4 md:mt-0">
+                  <div className="text-gray-700 font-medium mb-1">Shipping Address:</div>
+                  <div className="text-gray-600 text-sm whitespace-pre-line">
+                    {order.address && typeof order.address === 'object' ? (
+                      <>
+                        {order.address.name}<br/>
+                        {order.address.address}<br/>
+                        {order.address.address2}<br/>
+                        {order.address.city}, {order.address.state} - {order.address.pincode}<br/>
+                        {order.address.phone}<br/>
+                        {order.address.addressType && (<span className="capitalize">({order.address.addressType})</span>)}
+                      </>
+                    ) : (
+                      order.address
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="font-medium mb-2">Products:</div>
+                <div className="divide-y divide-gray-100">
+                  {order.products && order.products.length > 0 ? order.products.map((item: any, idx: number) => (
+                    <div key={item.product?._id || idx} className="flex items-center gap-4 py-3">
+                      {item.product?.image && (
+                        <Image src={item.product.image} alt={item.product.name} width={64} height={64} className="rounded object-cover border" />
+                      )}
+                      <div className="flex-1">
+                        <div className="font-semibold">{item.product?.name || 'Product'}</div>
+                        <div className="text-gray-600 text-sm">Qty: {item.quantity}</div>
+                        <div className="text-gray-600 text-sm">Price: ₹{item.price}</div>
+                        <div className="text-gray-600 text-sm">Subtotal: ₹{item.price * item.quantity}</div>
+                      </div>
+                    </div>
+                  )) : <div className="text-gray-500">No products found.</div>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

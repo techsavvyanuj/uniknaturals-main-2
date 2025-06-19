@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/hooks/useCart';
 import { createOrder } from '@/app/api/ordersApi';
@@ -15,7 +15,16 @@ declare global {
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
-  const [shipping, setShipping] = useState({ name: '', address: '', city: '', state: '', zip: '', phone: '' });
+  const [shipping, setShipping] = useState({
+    pincode: '',
+    city: '',
+    state: '',
+    name: '',
+    address: '',
+    address2: '',
+    addressType: 'home',
+    phone: '',
+  });
   const [step, setStep] = useState<'form' | 'review' | 'payment' | 'success'>('form');
   const [orderId, setOrderId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -25,7 +34,30 @@ export default function CheckoutPage() {
 
   const total = subtotal;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Auto-fetch city/state from pincode
+  useEffect(() => {
+    const fetchCityState = async () => {
+      if (shipping.pincode.length === 6) {
+        try {
+          const res = await fetch(`https://api.postalpincode.in/pincode/${shipping.pincode}`);
+          const data = await res.json();
+          if (data[0].Status === 'Success') {
+            setShipping(prev => ({
+              ...prev,
+              city: data[0].PostOffice[0].District,
+              state: data[0].PostOffice[0].State,
+            }));
+          }
+        } catch {
+          // ignore errors
+        }
+      }
+    };
+    fetchCityState();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shipping.pincode]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setShipping({ ...shipping, [e.target.name]: e.target.value });
   };
 
@@ -91,7 +123,16 @@ export default function CheckoutPage() {
             await createOrder({
               products: filteredProductsForOrder,
               total,
-              address: `${shipping.name}, ${shipping.address}, ${shipping.city}, ${shipping.state}, ${shipping.zip}, ${shipping.phone}`,
+              address: {
+                pincode: shipping.pincode,
+                city: shipping.city,
+                state: shipping.state,
+                name: shipping.name,
+                address: shipping.address,
+                address2: shipping.address2,
+                addressType: shipping.addressType,
+                phone: shipping.phone,
+              },
               paymentId: response.razorpay_payment_id,
             }, token || undefined);
             setStep('success');
@@ -135,12 +176,21 @@ export default function CheckoutPage() {
         <h1 className="text-2xl font-bold mb-6 text-center">Checkout</h1>
         {step === 'form' && (
           <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow">
+            <input name="pincode" value={shipping.pincode} onChange={handleChange} required placeholder="PIN Code" className="w-full p-2 border rounded" maxLength={6} minLength={6} pattern="[0-9]{6}" />
+            <input name="city" value={shipping.city} onChange={handleChange} required placeholder="City" className="w-full p-2 border rounded" readOnly />
+            <input name="state" value={shipping.state} onChange={handleChange} required placeholder="State" className="w-full p-2 border rounded" readOnly />
             <input name="name" value={shipping.name} onChange={handleChange} required placeholder="Full Name" className="w-full p-2 border rounded" />
-            <input name="address" value={shipping.address} onChange={handleChange} required placeholder="Address" className="w-full p-2 border rounded" />
-            <input name="city" value={shipping.city} onChange={handleChange} required placeholder="City" className="w-full p-2 border rounded" />
-            <input name="state" value={shipping.state} onChange={handleChange} required placeholder="State" className="w-full p-2 border rounded" />
-            <input name="zip" value={shipping.zip} onChange={handleChange} required placeholder="ZIP Code" className="w-full p-2 border rounded" />
-            <input name="phone" value={shipping.phone} onChange={handleChange} required placeholder="Phone Number" className="w-full p-2 border rounded" />
+            <input name="address" value={shipping.address} onChange={handleChange} required placeholder="Complete Address" className="w-full p-2 border rounded" />
+            <input name="address2" value={shipping.address2} onChange={handleChange} required placeholder="House, Floor, Landmark" className="w-full p-2 border rounded" />
+            <input name="phone" value={shipping.phone} onChange={handleChange} required placeholder="Mobile Number" className="w-full p-2 border rounded" maxLength={10} minLength={10} pattern="[0-9]{10}" />
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2">
+                <input type="radio" name="addressType" value="home" checked={shipping.addressType === 'home'} onChange={handleChange} /> Home
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="radio" name="addressType" value="work" checked={shipping.addressType === 'work'} onChange={handleChange} /> Work
+              </label>
+            </div>
             <button type="submit" className="w-full bg-sage text-white py-2 rounded mt-4">Continue to Review</button>
           </form>
         )}
@@ -155,8 +205,9 @@ export default function CheckoutPage() {
                 </li>
               ))}
             </ul>
-            <div className="mb-2">Shipping to: {shipping.address}, {shipping.city}, {shipping.state}, {shipping.zip}</div>
+            <div className="mb-2">Shipping to: {shipping.name}, {shipping.address}, {shipping.address2}, {shipping.city}, {shipping.state}, {shipping.pincode}</div>
             <div className="mb-2">Phone: {shipping.phone}</div>
+            <div className="mb-2">Address Type: {shipping.addressType}</div>
             <div className="font-bold mb-4">Total: ₹{total}</div>
             <button onClick={handlePlaceOrder} className="w-full bg-sage text-white py-2 rounded">Proceed to Payment</button>
           </div>

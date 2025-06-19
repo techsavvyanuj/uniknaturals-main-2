@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/hooks/useCart';
+import { useRouter } from 'next/navigation';
 
 export interface ProductProps {
   id: string;
@@ -12,6 +13,7 @@ export interface ProductProps {
   price: number;
   salePrice?: number;
   image: string;
+  images?: string[];
   slug: string;
   reviewCount?: number;
   soldOut?: boolean;
@@ -25,14 +27,16 @@ export default function ProductCard({
   price,
   salePrice,
   image,
+  images,
   slug,
   reviewCount = 0,
   soldOut = false,
   animationDelay = 0
-}: ProductProps) {
+}: ProductProps & { images?: string[] }) {
   const discount = salePrice ? Math.round(((price - salePrice) / price) * 100) : 0;
   const { addItem } = useCart();
   const [isVisible, setIsVisible] = useState(true); // Start visible by default
+  const router = useRouter();
 
   useEffect(() => {
     // No delay needed for initial visibility
@@ -44,11 +48,21 @@ export default function ProductCard({
     return () => clearTimeout(timer);
   }, [animationDelay]);
 
+  // Helper to check if user is logged in
+  const isUserLoggedIn = () => {
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('userAuth');
+    }
+    return false;
+  };
+
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation to product page
-    
+    e.preventDefault();
     if (soldOut) return;
-    
+    if (!isUserLoggedIn()) {
+      router.push('/account');
+      return;
+    }
     addItem({
       id,
       name,
@@ -68,12 +82,31 @@ export default function ProductCard({
     }, 1500);
   };
 
+  const handleBuyItNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (soldOut) return;
+    if (!isUserLoggedIn()) {
+      router.push('/account');
+      return;
+    }
+    addItem({
+      id,
+      name,
+      price: salePrice || price,
+      image
+    });
+    router.push('/cart/checkout');
+  };
+
   // Apply different animations randomly to create variety
   const animationClass = () => {
     const animations = ['animate-floatIn', 'animate-zoomIn', 'animate-rotateIn', 'animate-scaleUp'];
     const randomIndex = Math.floor((id.charCodeAt(0) % animations.length));
     return animations[randomIndex];
   };
+
+  // Fallback image logic: prefer images[0], then image, then default
+  const validImage = (images && images.length > 0 && images[0]) || (image && typeof image === 'string' && image.trim() !== '' ? image : '/images/products/default.png');
 
   return (
     <div 
@@ -83,11 +116,11 @@ export default function ProductCard({
       <Link href={`/products/${slug}`}>
         <div className="relative overflow-hidden img-zoom-container">
           <Image
-            src={image}
+            src={validImage}
             alt={name}
             width={500}
             height={500}
-            className="w-full h-64 object-cover img-zoom"
+            className="w-full h-64 object-contain img-zoom"
           />
           {discount > 0 && (
             <div className="absolute top-2 right-2 bg-accent text-white text-xs font-medium px-2 py-1 rounded animate-pulse">
@@ -132,7 +165,7 @@ export default function ProductCard({
         )}
         
         <div className="mt-2 flex items-center">
-          {salePrice ? (
+          {salePrice && salePrice > 0 ? (
             <>
               <span className="text-lg font-medium text-accent">₹ {salePrice.toFixed(2)}</span>
               <span className="ml-2 text-sm text-gray-500 line-through">₹ {price.toFixed(2)}</span>
@@ -142,7 +175,7 @@ export default function ProductCard({
           )}
         </div>
         
-        <div className="mt-4">
+        <div className="mt-4 flex flex-col gap-2">
           <button
             className={`w-full px-4 py-2 bg-sage text-white rounded transition-all duration-300 ${soldOut ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sage/80 hover:shadow-md transform hover:-translate-y-1'}`}
             disabled={soldOut}
@@ -150,8 +183,15 @@ export default function ProductCard({
           >
             {soldOut ? 'Sold out' : 'Add to cart'}
           </button>
+          <button
+            className={`w-full px-4 py-2 border border-sage text-sage rounded transition-all duration-300 ${soldOut ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sage/10 hover:shadow-md transform hover:-translate-y-1'}`}
+            disabled={soldOut}
+            onClick={handleBuyItNow}
+          >
+            Buy it now
+          </button>
         </div>
       </div>
     </div>
   );
-} 
+}

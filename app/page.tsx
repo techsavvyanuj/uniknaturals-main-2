@@ -8,54 +8,7 @@ import { useRouter } from 'next/navigation';
 import VideoCard from '@/components/VideoCard';
 import HeroBanner from '@/components/HeroBanner';
 import { useCart } from '@/hooks/useCart';
-
-// Sample product data (in a real app, this would come from an API/backend)
-const featuredProducts = [
-  {
-    id: '1',
-    name: 'Hair Gel Mask',
-    description: 'Repairs split ends | restores shine, | smooths frizz | Reduces hair fall',
-    price: 1099,
-    salePrice: 1049,
-    image: '/images/products/hair gel mask.jpeg',
-    slug: 'hair-care-combo',
-    reviewCount: 22,
-    soldOut: false
-  },
-  {
-    id: '2',
-    name: 'Rosemary Shampoo',
-    description: 'Sulfate-Free | Strengthens hair | Renews shine | Hair Strengthening',
-    price: 649,
-    salePrice: 599,
-    image: '/images/products/rosemary shampoo.jpeg',
-    slug: 'strengthening-shampoo',
-    reviewCount: 122,
-    soldOut: false
-  },
-  {
-    id: '3',
-    name: 'Sunscreen Body Lotion',
-    description: 'Non-toxic | mineral-based SPF  | zinc oxide and aloevera ',
-    price: 459,
-    salePrice: 436,
-    image: '/images/products/body lotion.jpeg',
-    slug: 'barrier-repair-moisturizer',
-    reviewCount: 68,
-    soldOut: false
-  },
-  {
-    id: '4',
-    name: 'Natural Rose Soap',
-    description: 'Gentle Hydration & Skin Soothing | Cleanses skin without stripping natural oil',
-    price: 549,
-    salePrice: 522,
-    image: '/images/products/soaps.jpeg',
-    slug: 'hydrating-bodywash',
-    reviewCount: 65,
-    soldOut: false
-  }
-];
+import axios from 'axios';
 
 // Hero slideshow images
 const heroImages = [
@@ -188,7 +141,39 @@ export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animateHero, setAnimateHero] = useState(true);
   const [animateProducts, setAnimateProducts] = useState(false);
+  const [trendingSection, setTrendingSection] = useState<any>(null);
+  const [moreProductsSection, setMoreProductsSection] = useState<any>(null);
   const productsRef = useRef<HTMLDivElement>(null);
+
+  // Fetch trending products from backend
+  useEffect(() => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5005/api";
+    const fetchTrendingProducts = async () => {
+      try {
+        const response = await axios.get(`${API_BASE}/trending-products`);
+        setTrendingSection(response.data);
+      } catch (error) {
+        console.error('Error fetching trending products:', error);
+      }
+    };
+
+    fetchTrendingProducts();
+  }, []);
+
+  // Fetch more products from backend
+  useEffect(() => {
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5005/api";
+    const fetchMoreProducts = async () => {
+      try {
+        const response = await axios.get(`${API_BASE}/more-products`);
+        setMoreProductsSection(response.data);
+      } catch (error) {
+        console.error('Error fetching more products:', error);
+      }
+    };
+
+    fetchMoreProducts();
+  }, []);
 
   // Auto-rotate hero slides
   useEffect(() => {
@@ -233,25 +218,63 @@ export default function Home() {
         {/* Featured Products */}
         <section className="py-12 md:py-14 animate-slideUp bg-warm-beige" id="trending-products">
           <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-8 animate-slideInLeft text-sage">TRENDING PRODUCTS</h2>
-            
-            {/* Mobile horizontal scroll for small screens */}
-            <div className="md:hidden w-full overflow-x-auto pb-6 hide-scrollbar">
-              <div className="flex space-x-4 px-4 min-w-max">
-                {featuredProducts.map((product, index) => (
-                  <div key={product.id} className="w-64">
-                    <ProductCard {...product} animationDelay={index} />
-                  </div>
+            <h2 className="text-3xl font-bold text-center mb-8 animate-slideInLeft text-sage">
+              TRENDING PRODUCTS
+            </h2>
+            {/* Fetch trending products from backend */}
+            {trendingSection && trendingSection.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                {trendingSection.map((product: any, index: number) => (
+                  <Link href={`/products/${product.slug}`} key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp" style={{animationDelay: `${index * 0.1}s`}}>
+                    <div className="img-zoom-container mb-2">
+                      <Image 
+                        src={(product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'}
+                        alt={product.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-48 object-cover mb-2 img-zoom"
+                      />
+                    </div>
+                    <h3 className="text-lg font-medium mb-2">{product.name}</h3>
+                    <p className="text-sm text-gray-600 mb-3">{product.description}</p>
+                    <div className="flex justify-center items-center mb-4">
+                      {product.salePrice ? (
+                        <>
+                          <span className="font-medium mr-2">₹ {product.salePrice}</span>
+                          <span className="text-sm text-gray-500 line-through">₹ {product.price}</span>
+                        </>
+                      ) : (
+                        <span className="font-medium">₹ {product.price}</span>
+                      )}
+                    </div>
+                    <button 
+                      onClick={e => {
+                        e.preventDefault();
+                        addItem({
+                          id: product._id || product.id,
+                          name: product.name,
+                          price: product.salePrice || product.price,
+                          image: (product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'
+                        });
+                        const button = e.currentTarget as HTMLButtonElement;
+                        const originalText = button.innerText;
+                        button.innerText = 'Added! ✓';
+                        button.classList.add('bg-sage', 'text-white');
+                        setTimeout(() => {
+                          button.innerText = originalText;
+                          button.classList.remove('bg-sage', 'text-white');
+                        }, 1500);
+                      }}
+                      className="w-full btn-outline bg-sage text-white hover:bg-sage/90"
+                    >
+                      Add to cart
+                    </button>
+                  </Link>
                 ))}
               </div>
-            </div>
-            
-            {/* Grid layout for medium screens and above */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.map((product, index) => (
-                <ProductCard key={product.id} {...product} animationDelay={index} />
-              ))}
-            </div>
+            ) : (
+              <div className="text-center py-10">No trending products found.</div>
+            )}
           </div>
         </section>
         
@@ -382,19 +405,18 @@ export default function Home() {
         <section className="section-beige py-6 md:py-10">
           <div className="container">
             <h3 className="text-2xl font-bold text-center mb-6 animate-slideInRight text-sage">MORE PRODUCTS</h3>
-            
-            {/* Mobile horizontal scroll for small screens */}
-            <div className="md:hidden w-full overflow-x-auto pb-6 hide-scrollbar">
-              <div className="flex space-x-4 px-4 min-w-max">
-                {featuredProducts.slice(0, 4).map((product, index) => (
-                  <div key={`secondary-mobile-${product.id}`} className="w-64 border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp" style={{animationDelay: `${index * 0.1 + 0.2}s`}}>
-                    <div className="img-zoom-container">
+            {/* Fetch more products from backend */}
+            {moreProductsSection && moreProductsSection.length > 0 ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                {moreProductsSection.map((product: any, index: number) => (
+                  <Link href={`/products/${product.slug}`} key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp" style={{animationDelay: `${index * 0.1 + 0.2}s`}}>
+                    <div className="img-zoom-container mb-2">
                       <Image 
-                        src={product.image}
+                        src={(product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'}
                         alt={product.name}
                         width={300}
                         height={300}
-                        className="w-full h-48 object-cover mb-4 img-zoom"
+                        className="w-full h-48 object-cover mb-2 img-zoom"
                       />
                     </div>
                     <h3 className="text-lg font-medium mb-2">{product.name}</h3>
@@ -410,21 +432,18 @@ export default function Home() {
                       )}
                     </div>
                     <button 
-                      onClick={(e) => {
+                      onClick={e => {
                         e.preventDefault();
                         addItem({
-                          id: product.id,
+                          id: product._id || product.id,
                           name: product.name,
                           price: product.salePrice || product.price,
-                          image: product.image
+                          image: (product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'
                         });
-                        
-                        // Show feedback when added to cart
                         const button = e.currentTarget as HTMLButtonElement;
                         const originalText = button.innerText;
                         button.innerText = 'Added! ✓';
                         button.classList.add('bg-sage', 'text-white');
-                        
                         setTimeout(() => {
                           button.innerText = originalText;
                           button.classList.remove('bg-sage', 'text-white');
@@ -434,64 +453,12 @@ export default function Home() {
                     >
                       Add to cart
                     </button>
-                  </div>
+                  </Link>
                 ))}
               </div>
-            </div>
-            
-            {/* Grid layout for medium screens and above */}
-            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredProducts.slice(0, 4).map((product, index) => (
-                <div key={`secondary-${product.id}`} className={`border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp`} style={{animationDelay: `${index * 0.1 + 0.2}s`}}>
-                  <div className="img-zoom-container">
-        <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-48 object-cover mb-4 img-zoom"
-                    />
-                  </div>
-                  <h3 className="text-lg font-medium mb-2">{product.name}</h3>
-                  <p className="text-sm text-gray-600 mb-3">{product.description}</p>
-                  <div className="flex justify-center items-center mb-4">
-                    {product.salePrice ? (
-                      <>
-                        <span className="font-medium mr-2">₹ {product.salePrice}</span>
-                        <span className="text-sm text-gray-500 line-through">₹ {product.price}</span>
-                      </>
-                    ) : (
-                      <span className="font-medium">₹ {product.price}</span>
-                    )}
-                  </div>
-                  <button 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      addItem({
-                        id: product.id,
-                        name: product.name,
-                        price: product.salePrice || product.price,
-                        image: product.image
-                      });
-                      
-                      // Show feedback when added to cart
-                      const button = e.currentTarget as HTMLButtonElement;
-                      const originalText = button.innerText;
-                      button.innerText = 'Added! ✓';
-                      button.classList.add('bg-sage', 'text-white');
-                      
-                      setTimeout(() => {
-                        button.innerText = originalText;
-                        button.classList.remove('bg-sage', 'text-white');
-                      }, 1500);
-                    }}
-                    className="w-full btn-outline bg-sage text-white hover:bg-sage/90"
-                  >
-                    Add to cart
-                  </button>
-                </div>
-              ))}
-            </div>
+            ) : (
+              <div className="text-center py-10">No more products found.</div>
+            )}
           </div>
         </section>
         
@@ -684,7 +651,7 @@ export default function Home() {
               
               <div className="bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp delay-300 group">
                 <div className="relative h-64 overflow-hidden">
-            <Image
+                  <Image 
                     src="https://abso-essentials.com/cdn/shop/files/Rosemary_2.webp?v=1725610343&width=360"
                     alt="Rosemary Extract"
                     fill

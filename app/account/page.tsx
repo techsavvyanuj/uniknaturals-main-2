@@ -5,6 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/components/Header';
 import { registerAdmin, loginAdmin } from '@/app/api/authApi';
+import { fetchUserProfile, fetchWishlist, addToWishlist, removeFromWishlist } from '@/app/api/userApi';
+import { fetchMyOrders } from '@/app/api/orderHistoryApi';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 export default function AccountPage() {
@@ -13,18 +16,84 @@ export default function AccountPage() {
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
   const [forgotEmail, setForgotEmail] = useState('');
   const [isResetSent, setIsResetSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
+  const [wishlist, setWishlist] = useState<any[]>([]);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [profileLoading, setProfileLoading] = useState(true);
+  const [wishlistLoading, setWishlistLoading] = useState(true);
+  const [ordersLoading, setOrdersLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [editProfile, setEditProfile] = useState<any>({});
+  const [profileUpdateLoading, setProfileUpdateLoading] = useState(false);
+  const [profileUpdateError, setProfileUpdateError] = useState<string | null>(null);
   const router = useRouter();
   
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('userAuth');
-      if (token) setIsLoggedIn(true);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
+    if (token) {
+      setIsLoggedIn(true);
+      setProfileLoading(true);
+      fetchUserProfile(token)
+        .then(data => {
+          setUserProfile(data);
+          setEditProfile({ email: data.email, phone: data.phone || '', address: data.address || '' });
+          setProfileLoading(false);
+        })
+        .catch((err) => {
+          console.error('Profile fetch error:', err);
+          setProfileLoading(false);
+        });
+      setWishlistLoading(true);
+      fetchWishlist(token)
+        .then(data => {
+          setWishlist(data);
+          setWishlistLoading(false);
+        })
+        .catch((err) => {
+          console.error('Wishlist fetch error:', err);
+          setWishlistLoading(false);
+        });
+      setOrdersLoading(true);
+      fetchMyOrders(token)
+        .then(data => {
+          setOrders(data);
+          setOrdersLoading(false);
+        })
+        .catch((err) => {
+          console.error('Orders fetch error:', err);
+          setOrdersLoading(false);
+        });
     }
   }, []);
+
+  const handleProfileEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditProfile({ ...editProfile, [e.target.name]: e.target.value });
+  };
+
+  const handleProfileUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileUpdateLoading(true);
+    setProfileUpdateError(null);
+    const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
+    try {
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api'}/users/me`,
+        { phone: editProfile.phone, address: editProfile.address },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setUserProfile({ ...userProfile, phone: editProfile.phone, address: editProfile.address });
+      setEditMode(false);
+    } catch (err: any) {
+      setProfileUpdateError('Failed to update profile.');
+    } finally {
+      setProfileUpdateLoading(false);
+    }
+  };
   
   // Handle login form submission
   const handleLogin = async (e: React.FormEvent) => {
@@ -44,12 +113,18 @@ export default function AccountPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await registerAdmin(firstName + ' ' + lastName, email, password);
+      const res = await registerAdmin(firstName + ' ' + lastName, email, password, phone);
       setSuccessMessage('Registration successful! Please log in.');
       setActiveTab('login');
       setTimeout(() => router.push('/account'), 1000);
-    } catch {
-      setSuccessMessage('Registration failed. Try again.');
+    } catch (err: any) {
+      if (err.response && err.response.data && err.response.data.error === 'Email already exists') {
+        setSuccessMessage('An account with this email already exists. Please log in or use a different email.');
+      } else if (err.response && err.response.data && err.response.data.error === 'Phone number already exists') {
+        setSuccessMessage('An account with this phone number already exists. Please log in or use a different phone number.');
+      } else {
+        setSuccessMessage('Registration failed. Try again.');
+      }
     }
   };
   
@@ -61,15 +136,117 @@ export default function AccountPage() {
     setIsResetSent(true);
   };
   
+  const handleLogout = () => {
+    localStorage.removeItem('userAuth');
+    setIsLoggedIn(false);
+    setUserProfile(null);
+    setWishlist([]);
+    setOrders([]);
+    setSuccessMessage('Logged out successfully.');
+    setActiveTab('login');
+    router.push('/account');
+  };
+
   if (isLoggedIn) {
     return (
       <main>
         <Header />
         <div className="container max-w-6xl mx-auto px-4 py-12 mt-16">
-          <div className="max-w-md mx-auto bg-white rounded-lg shadow-sm overflow-hidden p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Welcome, {email || 'User'}!</h2>
-            <p className="mb-4">You are logged in.</p>
-            <Link href="/account/orders" className="text-sage underline">View My Orders</Link>
+          <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden p-8">
+            <h2 className="text-2xl font-bold mb-4">My Profile</h2>
+            <button className="btn-outline mb-4 float-right" onClick={handleLogout}>
+              Logout
+            </button>
+            {profileLoading ? (
+              <div>Loading profile...</div>
+            ) : userProfile ? (
+              <div className="mb-6 text-left">
+                <div className="mb-2"><b>Email:</b> {userProfile.email}</div>
+                {editMode ? (
+                  <form onSubmit={handleProfileUpdate} className="space-y-2">
+                    <div>
+                      <label className="block text-sm font-medium">Phone:</label>
+                      <input
+                        type="text"
+                        name="phone"
+                        value={editProfile.phone}
+                        onChange={handleProfileEditChange}
+                        className="w-full border rounded px-2 py-1"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">Address:</label>
+                      <input
+                        type="text"
+                        name="address"
+                        value={editProfile.address}
+                        onChange={handleProfileEditChange}
+                        className="w-full border rounded px-2 py-1"
+                      />
+                    </div>
+                    {profileUpdateError && <div className="text-red-600 text-sm">{profileUpdateError}</div>}
+                    <div className="flex gap-2 mt-2">
+                      <button type="submit" className="btn" disabled={profileUpdateLoading}>
+                        {profileUpdateLoading ? 'Saving...' : 'Save'}
+                      </button>
+                      <button type="button" className="btn-outline" onClick={() => setEditMode(false)} disabled={profileUpdateLoading}>
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    <div className="mb-2"><b>Phone:</b> {userProfile.phone || 'Not set'}</div>
+                    <div className="mb-2"><b>Address:</b> {typeof userProfile.address === 'string'
+                      ? userProfile.address || 'Not set'
+                      : userProfile.address
+                        ? Object.values(userProfile.address).filter(Boolean).join(', ')
+                        : 'Not set'}</div>
+                    <button className="btn-outline mt-2" onClick={() => setEditMode(true)}>
+                      Edit Profile
+                    </button>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="mb-6 text-red-600">Could not load profile.</div>
+            )}
+            <h3 className="text-xl font-semibold mb-2 mt-8">My Orders</h3>
+            {ordersLoading ? (
+              <div>Loading orders...</div>
+            ) : orders.length === 0 ? (
+              <div>No orders found.</div>
+            ) : (
+              <ul className="mb-6">
+                {orders.slice(0, 3).map((order: any) => (
+                  <li key={order._id} className="mb-2 border-b pb-2">
+                    <div><b>Order ID:</b> {order._id}</div>
+                    <div><b>Total:</b> ₹{order.total}</div>
+                    <div><b>Status:</b> {order.status || 'Placed'}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Link href="/account/orders" className="text-sage underline">View All Orders</Link>
+            <h3 className="text-xl font-semibold mb-2 mt-8">My Wishlist</h3>
+            {wishlistLoading ? (
+              <div>Loading wishlist...</div>
+            ) : wishlist.length === 0 ? (
+              <div>Your wishlist is empty.</div>
+            ) : (
+              <ul>
+                {wishlist.map((item: any) => (
+                  <li key={item._id} className="mb-2 flex items-center justify-between border-b pb-2">
+                    <span>{item.name}</span>
+                    <button onClick={async () => {
+                      const token = localStorage.getItem('userAuth') || '';
+                      await removeFromWishlist(item._id, token);
+                      setWishlist(wishlist.filter((w: any) => w._id !== item._id));
+                    }} className="text-red-600 hover:underline text-sm">Remove</button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </main>
@@ -184,6 +361,11 @@ export default function AccountPage() {
             {/* Register Form */}
             {activeTab === 'register' && (
               <div className="animate-fadeIn">
+                {successMessage && (
+                  <div className="bg-red-100 text-red-800 px-4 py-2 text-center mb-4 rounded">
+                    {successMessage}
+                  </div>
+                )}
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -244,6 +426,24 @@ export default function AccountPage() {
                     <p className="text-xs text-gray-500 mt-1">
                       Password must be at least 8 characters long
                     </p>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="registerPhone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Mobile Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="registerPhone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent"
+                      required
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      minLength={10}
+                      placeholder="10-digit mobile number"
+                    />
                   </div>
                   
                   <div className="flex items-center">

@@ -9,9 +9,12 @@ export interface ProductFormData {
   name: string;
   description: string;
   price: number;
+  salePrice?: number;
   stock: number;
   category: string;
   image: string;
+  images?: string[];
+  features?: string[];
   featured: boolean;
   slug: string; // Add slug to form data
 }
@@ -26,9 +29,12 @@ const defaultProduct: ProductFormData = {
   name: '',
   description: '',
   price: 0,
+  salePrice: 0,
   stock: 0,
   category: '',
   image: '',
+  images: [],
+  features: [],
   featured: false,
   slug: '',
 };
@@ -36,13 +42,16 @@ const defaultProduct: ProductFormData = {
 export default function ProductForm({ initialData, onSubmit, isSubmitting }: ProductFormProps) {
   const [formData, setFormData] = useState<ProductFormData>(initialData || defaultProduct);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>(initialData?.images || []);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [featureInputs, setFeatureInputs] = useState<string[]>(formData.features && formData.features.length > 0 ? formData.features : Array(6).fill(''));
   const router = useRouter();
 
   useEffect(() => {
     if (initialData?.image) {
       setImagePreview(initialData.image);
     }
+    setFeatureInputs(initialData?.features || ['']);
   }, [initialData]);
 
   const generateSlug = (name: string) =>
@@ -75,23 +84,15 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
     }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // In a real app, this would upload to a server and get a URL back
-    // For now, we'll just create a local preview
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const result = reader.result as string;
-      setImagePreview(result);
-      setFormData(prev => ({
-        ...prev,
-        image: file.name, // In real app, this would be the URL from the server
-      }));
-    };
-    reader.readAsDataURL(file);
+  const handleFeatureInputChange = (idx: number, value: string) => {
+    setFeatureInputs(inputs => {
+      const updated = [...inputs];
+      updated[idx] = value;
+      return updated;
+    });
   };
+  const addFeatureInput = () => setFeatureInputs(inputs => inputs.length < 10 ? [...inputs, ''] : inputs); // allow up to 10 if needed
+  const removeFeatureInput = (idx: number) => setFeatureInputs(inputs => inputs.filter((_, i) => i !== idx));
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
@@ -99,16 +100,31 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
     if (!formData.slug.trim()) newErrors.slug = 'Slug is required';
     if (!formData.description.trim()) newErrors.description = 'Description is required';
     if (formData.price <= 0) newErrors.price = 'Price must be greater than 0';
+    if (formData.salePrice && formData.salePrice < 0) newErrors.salePrice = 'Discounted price cannot be negative';
+    if (formData.salePrice && formData.salePrice >= formData.price) newErrors.salePrice = 'Discounted price must be less than price';
     if (formData.stock < 0) newErrors.stock = 'Stock cannot be negative';
     if (!formData.category) newErrors.category = 'Category is required';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
+  // Add image to images array
+  const handleAddImage = () => {
+    if (formData.image && !images.includes(formData.image)) {
+      setImages(prev => [...prev, formData.image]);
+      setFormData(prev => ({ ...prev, image: '' }));
+      setImagePreview(null);
+    }
+  };
+  // Remove image from images array
+  const handleRemoveImage = (img: string) => {
+    setImages(prev => prev.filter(i => i !== img));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      onSubmit(formData);
+      onSubmit({ ...formData, images: images.filter(Boolean), features: featureInputs.filter(f => f.trim() !== '') });
     }
   };
 
@@ -199,6 +215,24 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
           </div>
 
           <div className="mb-4">
+            <label htmlFor="salePrice" className="block text-sm font-medium text-gray-700 mb-1">
+              Discounted Price (optional)
+            </label>
+            <input
+              type="number"
+              id="salePrice"
+              name="salePrice"
+              min="0"
+              step="0.01"
+              value={formData.salePrice || ''}
+              onChange={handleChange}
+              className={`w-full p-2 border rounded focus:ring-sage focus:border-sage ${errors.salePrice ? 'border-red-500' : 'border-gray-300'}`}
+              placeholder="Enter discounted price"
+            />
+            {errors.salePrice && <p className="mt-1 text-sm text-red-600">{errors.salePrice}</p>}
+          </div>
+
+          <div className="mb-4">
             <label htmlFor="stock" className="block text-sm font-medium text-gray-700 mb-1">
               Stock *
             </label>
@@ -217,17 +251,31 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
           </div>
 
           <div className="mb-4">
-            <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
-              Product Image
-            </label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-1">Product Images (Main + up to 3 gallery images)</label>
+            <div className="flex flex-col gap-2">
+              {[0,1,2,3].map(idx => (
+                <div key={idx} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={images[idx] || ''}
+                    onChange={e => {
+                      const val = e.target.value;
+                      setImages(prev => {
+                        const arr = [...prev];
+                        arr[idx] = val;
+                        return arr;
+                      });
+                      if (idx === 0) setImagePreview(val);
+                    }}
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder={idx === 0 ? 'Main image URL (required)' : `Gallery image ${idx}`}
+                  />
+                  {images[idx] && (
+                    <button type="button" onClick={() => setImages(prev => prev.filter((_, i) => i !== idx))} className="text-red-500">Remove</button>
+                  )}
+                </div>
+              ))}
+            </div>
             {imagePreview && (
               <div className="mt-2 relative w-32 h-32">
                 <Image
@@ -235,7 +283,8 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
                   alt="Product preview"
                   fill
                   sizes="128px"
-                  className="object-cover rounded"
+                  className="object-contain rounded"
+                  unoptimized
                 />
               </div>
             )}
@@ -253,6 +302,27 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
               <span className="ml-2 text-sm text-gray-700">Featured Product</span>
             </label>
           </div>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-1">Features</label>
+        <div className="flex flex-col gap-2">
+          {featureInputs.map((feature, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <input
+                type="text"
+                value={feature}
+                onChange={e => handleFeatureInputChange(idx, e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+                placeholder={`Feature ${idx + 1}`}
+              />
+              {featureInputs.length > 1 && (
+                <button type="button" onClick={() => removeFeatureInput(idx)} className="text-red-500">Remove</button>
+              )}
+            </div>
+          ))}
+          <button type="button" onClick={addFeatureInput} className="mt-2 px-3 py-1 bg-sage text-white rounded w-fit">Add Feature</button>
         </div>
       </div>
 

@@ -56,17 +56,22 @@ export default function AdminDashboard() {
       </div>
       
       <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Link href="/admin/products/add" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition">
-          Add New Product
-        </Link>
-        <Link href="/admin/images" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition">
-          Manage Images
-        </Link>
-        <Link href="/admin/products" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition">
-          Manage Products
-        </Link>
+      <div className="w-full flex justify-center">
+        <div className="flex flex-row gap-8 overflow-x-auto px-2 py-4 bg-white rounded-lg shadow max-w-4xl w-full">
+          <Link href="/admin/products/add" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition min-w-[200px]">
+            Add New Product
+          </Link>
+          <Link href="/admin/products" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition min-w-[200px]">
+            Manage Products
+          </Link>
+          <Link href="/admin/trending-products" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition min-w-[200px]">
+            Manage Trending Products
+          </Link>
+          <Link href="/admin/more-products" className="bg-sage text-white p-4 rounded text-center hover:bg-opacity-90 transition min-w-[200px]">
+            Manage More Products
+          </Link>
+        </div>
       </div>
     </div>
   );
-} 
+}

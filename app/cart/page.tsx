@@ -237,7 +237,10 @@ export default function CartPage() {
 									</div>
 								)}
 
-								<button className="btn w-full py-3 bg-sage text-white rounded hover:bg-sage/80 transition-all" onClick={handleCheckout}>
+								<button
+									className="btn w-full py-3 bg-sage text-white rounded hover:bg-sage/80 transition-all"
+									onClick={() => router.push('/cart/checkout')}
+								>
 									Proceed to Checkout
 								</button>
 								{orderStatus && (
@@ -284,17 +287,6 @@ export default function CartPage() {
 					</div>
 				)}
 			</div>
-
-			{items.length > 0 && (
-				<div className="mt-6 text-right">
-					<button
-						className="bg-sage text-white px-6 py-2 rounded hover:bg-sage/90"
-						onClick={() => router.push('/cart/checkout')}
-					>
-						Proceed to Checkout
-					</button>
-				</div>
-			)}
 		</main>
 	);
 }
