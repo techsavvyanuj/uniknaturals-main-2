@@ -31,13 +31,13 @@ export default function Footer() {
               />
             </div>
             <p className="text-sm text-gray-600 mb-4">
-              580/1A/16B, Nishidha Society, Kondhwa Road, Bibwewadi, Pune, Maharashtra, 411037
+              Sanchar Nagar, Main Near Shree Ram Market, Kanadiya Road, Indore, Madhya Pradesh-452016.
             </p>
             <p className="text-sm text-gray-600 mb-2">
-              Email: info@uniknaturals.com
+              Email: theunikstyle3@gmail.com
             </p>
             <p className="text-sm text-gray-600 mb-4">
-              Phone: +91 90000 00000
+              Phone: 6264949997
             </p>
             <div className="flex space-x-4 mt-auto">
               <a href="https://facebook.com" className="text-sage hover:text-sage/80 transition-colors">
@@ -212,4 +212,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-} 
+}

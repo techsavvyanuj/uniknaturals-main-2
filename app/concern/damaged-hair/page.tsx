@@ -4,72 +4,34 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import HeroBanner from '@/components/HeroBanner';
+import { useEffect, useState } from 'react';
+import { fetchProducts, Product } from '@/app/api/productsApi';
 
-// Sample products data for damaged hair concern (in a real app, this would come from an API/backend)
-const damagedHairProducts = [
-  {
-    id: '1',
-    name: 'Strengthening Shampoo',
-    description: 'Tames frizz | Strengthens hair | Renews shine',
-    price: 649,
-    salePrice: 599,
-    image: 'https://abso-essentials.com/cdn/shop/files/shampoo_1_4x_f97c984e-c472-4f8c-872d-7e0763f74571.png?v=1732369710&width=533',
-    slug: 'strengthening-shampoo',
-    reviewCount: 122,
-    soldOut: false,
-    category: 'Shampoo'
-  },
-  {
-    id: '2',
-    name: 'Nourishing Conditioner',
-    description: 'Deep conditioning | Anti-frizz | Shiny hair | Smooth texture',
-    price: 599,
-    salePrice: 549,
-    image: 'https://abso-essentials.com/cdn/shop/files/conditioner_4x_6a4d91f2-790c-41f2-8935-5f1b33e38d5e.png?v=1732365073',
-    slug: 'nourishing-conditioner',
-    reviewCount: 84,
-    soldOut: false,
-    category: 'Conditioner'
-  },
-  {
-    id: '3',
-    name: 'Hydrating Hair Mask',
-    description: 'Intensive repair | Deep hydration | Protects from damage',
-    price: 899,
-    salePrice: undefined, // changed from null to undefined
-    image: 'https://abso-essentials.com/cdn/shop/files/3_in_1_4x_b26c9835-68d9-4259-b320-ff36c95003e6.png?v=1743842537',
-    slug: 'hydrating-hair-mask',
-    reviewCount: 56,
-    soldOut: false,
-    category: 'Hair Mask'
-  },
-  {
-    id: '4',
-    name: 'Hair Care Combo',
-    description: 'Tame frizz | Cleanses scalp | Renews shine ',
-    price: 1099,
-    salePrice: 1049,
-    image: 'https://abso-essentials.com/cdn/shop/files/shampoo_20ml-02.jpg?v=1742215413',
-    slug: 'hair-care-combo',
-    reviewCount: 22,
-    soldOut: false,
-    category: 'Combo'
-  },
-  {
-    id: '5',
-    name: 'Hair Growth Serum',
-    description: 'Stimulates growth | Prevents hair loss | Strengthens roots',
-    price: 899,
-    salePrice: 849,
-    image: 'https://abso-essentials.com/cdn/shop/files/haircare_2.jpg?v=1743841891&width=940',
-    slug: 'hair-growth-serum',
-    reviewCount: 68,
-    soldOut: false,
-    category: 'Serum'
-  }
-];
+// Removed the hardcoded damaged hair products
 
 export default function DamagedHairPage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [visibleProducts, setVisibleProducts] = useState(9);
+
+  useEffect(() => {
+    fetchProducts('Hair Care')
+      .then(data => {
+        const mapped = data.map((p: any) => ({ ...p, id: p._id || p.id }));
+        setProducts(mapped);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError('Failed to load products');
+        setLoading(false);
+      });
+  }, []);
+
+  const handleLoadMore = () => {
+    setVisibleProducts(prev => prev + 6);
+  };
+
   return (
     <>
       <Header />
@@ -137,12 +99,43 @@ export default function DamagedHairPage() {
         <section className="section-beige py-16">
           <div className="container">
             <h2 className="text-3xl font-bold text-center mb-12">Recommended Products for Damaged Hair</h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {damagedHairProducts.map((product, index) => (
-                <ProductCard key={product.id} {...product} animationDelay={index % 3} />
-              ))}
-            </div>
+            {loading ? (
+              <div className="text-center py-10">Loading products...</div>
+            ) : error ? (
+              <div className="text-center text-red-600 py-10">{error}</div>
+            ) : products.length === 0 ? (
+              <div className="text-center py-10">No products found.</div>
+            ) : (
+              <>
+                {/* Mobile horizontal scroll for small screens */}
+                <div className="md:hidden w-full overflow-x-auto pb-6 hide-scrollbar">
+                  <div className="flex space-x-4 px-4 min-w-max">
+                    {products.slice(0, visibleProducts).map((product, index) => (
+                      <div key={product.id || product.slug} className="w-64">
+                        <ProductCard {...product} animationDelay={index % 3} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {/* Grid layout for medium screens and above */}
+                <div className="hidden md:grid md:grid-cols-3 gap-6">
+                  {products.slice(0, visibleProducts).map((product, index) => (
+                    <ProductCard key={product.id || product.slug} {...product} animationDelay={index % 3} />
+                  ))}
+                </div>
+                {/* Load More Button */}
+                {visibleProducts < products.length && (
+                  <div className="mt-10 text-center">
+                    <button
+                      onClick={handleLoadMore}
+                      className="px-6 py-3 bg-sage text-white rounded-md hover:bg-sage/80 transition-all duration-300"
+                    >
+                      Load More Products
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </section>
 

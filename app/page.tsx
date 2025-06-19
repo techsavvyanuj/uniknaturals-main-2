@@ -138,6 +138,7 @@ function HeroSlideshow() {
 
 export default function Home() {
   const { addItem } = useCart();
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animateHero, setAnimateHero] = useState(true);
   const [animateProducts, setAnimateProducts] = useState(false);
@@ -147,7 +148,7 @@ export default function Home() {
 
   // Fetch trending products from backend
   useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5005/api";
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://uniknaturals-backend.onrender.com/api";
     const fetchTrendingProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE}/trending-products`);
@@ -162,7 +163,7 @@ export default function Home() {
 
   // Fetch more products from backend
   useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:5005/api";
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://uniknaturals-backend.onrender.com/api";
     const fetchMoreProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE}/more-products`);
@@ -207,6 +208,14 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  // Helper to check if user is logged in
+  const isUserLoggedIn = () => {
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('userAuth');
+    }
+    return false;
+  };
+
   return (
     <>
       <main className="pt-0 mt-0">
@@ -240,16 +249,20 @@ export default function Home() {
                     <div className="flex justify-center items-center mb-4">
                       {product.salePrice ? (
                         <>
-                          <span className="font-medium mr-2">₹ {product.salePrice}</span>
-                          <span className="text-sm text-gray-500 line-through">₹ {product.price}</span>
+                          <span className="font-medium mr-2" style={{ color: '#6b715d' }}>₹ {product.salePrice}</span>
+                          <span className="text-sm line-through">₹ {product.price}</span>
                         </>
                       ) : (
-                        <span className="font-medium">₹ {product.price}</span>
+                        <span className="font-medium" style={{ color: '#6b715d' }}>₹ {product.price}</span>
                       )}
                     </div>
                     <button 
                       onClick={e => {
                         e.preventDefault();
+                        if (!isUserLoggedIn()) {
+                          router.push('/account');
+                          return;
+                        }
                         addItem({
                           id: product._id || product.id,
                           name: product.name,
@@ -265,9 +278,28 @@ export default function Home() {
                           button.classList.remove('bg-sage', 'text-white');
                         }, 1500);
                       }}
-                      className="w-full btn-outline bg-sage text-white hover:bg-sage/90"
+                      className="w-full btn-outline bg-sage text-white hover:bg-sage/90 mb-2"
                     >
                       Add to cart
+                    </button>
+                    <button
+                      onClick={e => {
+                        e.preventDefault();
+                        if (!isUserLoggedIn()) {
+                          router.push('/account');
+                          return;
+                        }
+                        addItem({
+                          id: product._id || product.id,
+                          name: product.name,
+                          price: product.salePrice || product.price,
+                          image: (product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'
+                        });
+                        router.push('/cart/checkout');
+                      }}
+                      className="w-full border border-sage text-sage rounded hover:bg-sage/10 hover:shadow-md transform hover:-translate-y-1 transition-all duration-300"
+                    >
+                      Buy it now
                     </button>
                   </Link>
                 ))}
@@ -424,16 +456,20 @@ export default function Home() {
                     <div className="flex justify-center items-center mb-4">
                       {product.salePrice ? (
                         <>
-                          <span className="font-medium mr-2">₹ {product.salePrice}</span>
-                          <span className="text-sm text-gray-500 line-through">₹ {product.price}</span>
+                          <span className="font-medium mr-2" style={{ color: '#6b715d' }}>₹ {product.salePrice}</span>
+                          <span className="text-sm line-through">₹ {product.price}</span>
                         </>
                       ) : (
-                        <span className="font-medium">₹ {product.price}</span>
+                        <span className="font-medium" style={{ color: '##6b715d' }}>₹ {product.price}</span>
                       )}
                     </div>
                     <button 
                       onClick={e => {
                         e.preventDefault();
+                        if (!isUserLoggedIn()) {
+                          router.push('/account');
+                          return;
+                        }
                         addItem({
                           id: product._id || product.id,
                           name: product.name,
@@ -449,9 +485,28 @@ export default function Home() {
                           button.classList.remove('bg-sage', 'text-white');
                         }, 1500);
                       }}
-                      className="w-full btn-outline bg-sage text-white hover:bg-sage/90"
+                      className="w-full btn-outline bg-sage text-white hover:bg-sage/90 mb-2"
                     >
                       Add to cart
+                    </button>
+                    <button
+                      onClick={e => {
+                        e.preventDefault();
+                        if (!isUserLoggedIn()) {
+                          router.push('/account');
+                          return;
+                        }
+                        addItem({
+                          id: product._id || product.id,
+                          name: product.name,
+                          price: product.salePrice || product.price,
+                          image: (product.images && product.images.length > 0 ? product.images[0] : product.image) || '/images/products/default.png'
+                        });
+                        router.push('/cart/checkout');
+                      }}
+                      className="w-full border border-sage text-sage rounded hover:bg-sage/10 hover:shadow-md transform hover:-translate-y-1 transition-all duration-300"
+                    >
+                      Buy it now
                     </button>
                   </Link>
                 ))}
@@ -790,63 +845,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
-        
-        {/* Blog Section */}
-        <section className="section py-8 md:py-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-8 animate-slideInRight text-sage">BLOGS</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="border border-gray-200 bg-white hover-lift animate-slideUp" style={{animationDelay: "0s"}}>
-                <div className="img-zoom-container">
-          <Image
-                    src="https://abso-essentials.com/cdn/shop/articles/Which_Shampoo_should_i_use_1_57441b8a-8325-4d91-8b96-10e3e7d1de4e.png?v=1742896499"
-                    alt="Blog post image"
-                    width={800}
-                    height={400}
-                    className="w-full h-48 object-cover img-zoom"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-lg mb-2 hover:text-accent transition-colors duration-300">Which Shampoo Is Best for Your Hair? The Ultimate Guide</h3>
-                  <p className="text-sm text-gray-600 mb-3">25 Mar 2025</p>
-                  <p className="text-gray-700">Your hair deserves the best care, and choosing the right shampoo is the first step toward healthy, beautiful locks...</p>
-                </div>
-              </div>
-              <div className="border border-gray-200 bg-white hover-lift animate-slideUp" style={{animationDelay: "0.2s"}}>
-                <div className="img-zoom-container">
-          <Image
-                    src="https://abso-essentials.com/cdn/shop/articles/hair_conditioner_blog_post_image.webp?v=1727425508"
-                    alt="Blog post image"
-                    width={800}
-                    height={400}
-                    className="w-full h-48 object-cover img-zoom"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-lg mb-2 hover:text-accent transition-colors duration-300">Nourish Your Locks: The Importance of Hair Conditioner</h3>
-                  <p className="text-sm text-gray-600 mb-3">24 Aug 2024</p>
-                  <p className="text-gray-700">Hair care isn't just about shampooing; it's a holistic regimen that includes conditioning...</p>
-                </div>
-              </div>
-              <div className="border border-gray-200 bg-white hover-lift animate-slideUp" style={{animationDelay: "0.4s"}}>
-                <div className="img-zoom-container">
-          <Image
-                    src="https://abso-essentials.com/cdn/shop/articles/Niacinamide-Blog-1200-x-600-px-1_1_b8cdd78b-a731-42e0-87ca-04712dc2cd88.jpg?v=1724486195"
-                    alt="Blog post image"
-                    width={800}
-                    height={400}
-                    className="w-full h-48 object-cover img-zoom"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="font-medium text-lg mb-2 hover:text-accent transition-colors duration-300">Best Sulphate-Free Shampoos for Healthy and Shiny Locks</h3>
-                  <p className="text-sm text-gray-600 mb-3">24 Aug 2024</p>
-                  <p className="text-gray-700">Maintaining healthy and shiny hair is a goal shared by many, but achieving it often involves...</p>
-                </div>
-              </div>
-            </div>
-    </div>
         </section>
       </main>
     </>
