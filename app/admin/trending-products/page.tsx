@@ -113,7 +113,7 @@ export default function TrendingProductsAdmin() {
       <div className="mb-4">
         <label className="block font-medium mb-1">Trending Products</label>
         <div className="max-h-64 overflow-y-auto border rounded p-2 bg-white">
-          {trending.length === 0 && <div>No trending products.</div>}
+          {trending.length === 0 && <div>No trending products</div>}
           {trending.map((p: any) => (
             <div key={p._id} className="flex items-center gap-2 mb-2">
               <span>{p.name}</span>

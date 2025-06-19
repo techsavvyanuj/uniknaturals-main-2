@@ -101,7 +101,9 @@ export default function ProductCard({
   // Apply different animations randomly to create variety
   const animationClass = () => {
     const animations = ['animate-floatIn', 'animate-zoomIn', 'animate-rotateIn', 'animate-scaleUp'];
-    const randomIndex = Math.floor((id.charCodeAt(0) % animations.length));
+    // Defensive: if id is undefined or not a string, fallback to 0
+    const safeId = typeof id === 'string' && id.length > 0 ? id : (slug || '0');
+    const randomIndex = Math.floor((safeId.charCodeAt(0) % animations.length));
     return animations[randomIndex];
   };
 

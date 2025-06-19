@@ -223,7 +223,7 @@ export default function Home() {
             </h2>
             {/* Fetch trending products from backend */}
             {trendingSection && trendingSection.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {trendingSection.map((product: any, index: number) => (
                   <Link href={`/products/${product.slug}`} key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp" style={{animationDelay: `${index * 0.1}s`}}>
                     <div className="img-zoom-container mb-2">
@@ -407,7 +407,7 @@ export default function Home() {
             <h3 className="text-2xl font-bold text-center mb-6 animate-slideInRight text-sage">MORE PRODUCTS</h3>
             {/* Fetch more products from backend */}
             {moreProductsSection && moreProductsSection.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {moreProductsSection.map((product: any, index: number) => (
                   <Link href={`/products/${product.slug}`} key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp" style={{animationDelay: `${index * 0.1 + 0.2}s`}}>
                     <div className="img-zoom-container mb-2">
