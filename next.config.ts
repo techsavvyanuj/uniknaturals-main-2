@@ -45,6 +45,11 @@ const nextConfig = {
         hostname: 'via.placeholder.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'm.media-amazon.com',
+        pathname: '**',
+      },
     ],
   },
   // Add CORS headers for video resources
