@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'http://localhost:5005/api';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api';
 
 export const fetchUserProfile = async (token: string) => {
   const res = await axios.get(`${API_BASE}/users/me`, {
