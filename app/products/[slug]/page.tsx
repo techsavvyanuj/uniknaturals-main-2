@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useCart } from '@/hooks/useCart';
 import { fetchProductBySlug, Product } from '@/app/api/productsApi';
-import { addToWishlist, removeFromWishlist, fetchWishlist } from '@/app/api/userApi';
 
 export default function ProductDetail() {
   const params = useParams();
@@ -17,9 +16,6 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
   const { addItem } = useCart();
-  const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [wishlist, setWishlist] = useState<any[]>([]);
-  const [wishlistError, setWishlistError] = useState<string | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
@@ -35,22 +31,6 @@ export default function ProductDetail() {
         setLoading(false);
       });
   }, [slug]);
-
-  useEffect(() => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
-    if (token && product) {
-      setWishlistLoading(true);
-      fetchWishlist(token)
-        .then(data => {
-          setWishlist(data);
-          setWishlistLoading(false);
-        })
-        .catch(() => {
-          setWishlistError('Could not load wishlist');
-          setWishlistLoading(false);
-        });
-    }
-  }, [product]);
 
   if (loading) {
     return (
@@ -101,34 +81,6 @@ export default function ProductDetail() {
     }
   };
 
-  const handleAddToWishlist = async () => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
-    if (!token) {
-      alert('Please login to add to wishlist');
-      return;
-    }
-    try {
-      await addToWishlist(product.id, token);
-      setWishlist([...wishlist, product]);
-    } catch {
-      alert('Could not add to wishlist');
-    }
-  };
-
-  const handleRemoveFromWishlist = async () => {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
-    if (!token) {
-      alert('Please login to remove from wishlist');
-      return;
-    }
-    try {
-      await removeFromWishlist(product.id, token);
-      setWishlist(wishlist.filter((item: any) => item.id !== product.id));
-    } catch {
-      alert('Could not remove from wishlist');
-    }
-  };
-
   const handleBuyNow = () => {
     const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
     if (!token) {
@@ -140,7 +92,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="container py-12">
+    <div className="container py-12 md:py-20" style={{marginTop: '80px'}}>
       {/* Breadcrumbs */}
       <div className="mb-8">
         <div className="flex items-center text-sm">
@@ -259,24 +211,6 @@ export default function ProductDetail() {
             >
               Buy it now
             </button>
-            {/* Wishlist Button */}
-            {wishlist.some((item: any) => item.id === product.id) ? (
-              <button
-                className="w-full py-3 bg-red-100 text-red-600 rounded border border-red-200 hover:bg-red-200"
-                onClick={handleRemoveFromWishlist}
-                disabled={wishlistLoading}
-              >
-                Remove from Wishlist
-              </button>
-            ) : (
-              <button
-                className="w-full py-3 bg-white text-sage border border-sage rounded hover:bg-sage hover:text-white"
-                onClick={handleAddToWishlist}
-                disabled={wishlistLoading}
-              >
-                Add to Wishlist
-              </button>
-            )}
           </div>
           <div className="border-t border-gray-200 pt-8">
             <h2 className="text-xl font-bold mb-4">Product Details</h2>

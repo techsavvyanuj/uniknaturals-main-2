@@ -198,7 +198,7 @@ export default function ProductsManagement() {
                         alt={product.name}
                         fill
                         sizes="64px"
-                        className="object-cover rounded"
+                        className="object-contain rounded"
                         unoptimized={true}
                         onError={(e) => {
                           // Prevent flickering by setting a data attribute to track error state

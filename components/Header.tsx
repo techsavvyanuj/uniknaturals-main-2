@@ -75,28 +75,28 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-900 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span>
               </Link>
               <div className="relative group">
-                <button className="text-gray-900 hover:text-gray-700 transition-all duration-300 py-0.5 px-1 flex items-center relative group hover:-translate-y-0.5 transform">
-                  <span className="font-medium">Shop By Concern</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180">
+                {/* <button className="text-gray-900 hover:text-gray-700 transition-all duration-300 py-0.5 px-1 flex items-center relative group hover:-translate-y-0.5 transform"> */}
+                  {/* <span className="font-medium">Shop By Concern</span> */}
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:rotate-180">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-900 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span>
-                </button>
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-900 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 origin-left"></span> */}
+                {/* </button> */}
                 <div className="absolute left-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform origin-top scale-95 group-hover:scale-100 z-50">
                   <Link href="/concern/damaged-hair" className="block px-4 py-1.5 text-[#6b705c] hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 hover:pl-6">
-                    Damaged Hair
+                    {/* Damaged Hai  */}
                   </Link>
                   <Link href="/concern/dull-frizzy-hair" className="block px-4 py-1.5 text-[#6b705c] hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 hover:pl-6">
-                    Dull and Frizzy Hair
+                    {/* Dull and Frizzy Hair */}
                   </Link>
                   <Link href="/concern/dullness-aging" className="block px-4 py-1.5 text-[#6b705c] hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 hover:pl-6">
-                    Dullness and Aging
+                    {/* Dullness and Aging */}
                   </Link>
                   <Link href="/concern/oily-scalp" className="block px-4 py-1.5 text-[#6b705c] hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 hover:pl-6">
-                    Oily Scalp
+                    {/* Oily Scalp */}
                   </Link>
                   <Link href="/concern/body-acne" className="block px-4 py-1.5 text-[#6b705c] hover:bg-gray-100 hover:text-gray-900 transition-all duration-200 hover:pl-6">
-                    Body Acne and Rashes
+                    {/* Body Acne and Rashes */}
                   </Link>
                 </div>
               </div>

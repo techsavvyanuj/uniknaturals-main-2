@@ -68,8 +68,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/body-care" className="text-sm text-gray-600 hover:text-sage transition-colors">
-                  Body Care
+                <Link href="/skin-care" className="text-sm text-gray-600 hover:text-sage transition-colors">
+                  Skin Care
                 </Link>
               </li>
               <li>
@@ -88,14 +88,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/faq" className="text-sm text-gray-600 hover:text-sage transition-colors">
-                  FAQ'S
+                <Link href="/shop" className="text-sm text-gray-600 hover:text-sage transition-colors">
+                  Shop All
                 </Link>
               </li>
               <li>
-                <Link href="/blogs" className="text-sm text-gray-600 hover:text-sage transition-colors">
-                  Blogs
-                </Link>
+                <a href="https://www.amazon.in/s?k=The+Unik+Style&ref=bl_dp_s_web_0" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-sage transition-colors">
+                  Buy from Amazon
+                </a>
               </li>
             </ul>
           </div>
