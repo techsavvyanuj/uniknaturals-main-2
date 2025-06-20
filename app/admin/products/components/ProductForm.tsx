@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import axios from 'axios';
 
 export interface ProductFormData {
   id?: string;
@@ -45,6 +46,8 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
   const [images, setImages] = useState<string[]>(initialData?.images || []);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [featureInputs, setFeatureInputs] = useState<string[]>(formData.features && formData.features.length > 0 ? formData.features : Array(6).fill(''));
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -119,6 +122,37 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
   // Remove image from images array
   const handleRemoveImage = (img: string) => {
     setImages(prev => prev.filter(i => i !== img));
+  };
+
+  // Handle file upload
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setUploadError(null);
+    const formData = new FormData();
+    formData.append('image', file);
+    try {
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_API_BASE + '/upload',
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      const backendBase = process.env.NEXT_PUBLIC_API_BASE?.replace('/api', '') || 'https://uniknaturals-backend.onrender.com';
+      const relativeUrl = res.data?.url || res.data?.imageUrl || res.data?.path || res.data;
+      const imageUrl = relativeUrl.startsWith('http') ? relativeUrl : `${backendBase}${relativeUrl}`;
+
+      setImages(prev => {
+        const arr = [...prev];
+        arr[idx] = imageUrl;
+        return arr;
+      });
+      if (idx === 0) setImagePreview(imageUrl);
+    } catch (err: any) {
+      setUploadError('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -250,6 +284,7 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
             {errors.stock && <p className="mt-1 text-sm text-red-600">{errors.stock}</p>}
           </div>
 
+          {/* --- Image Upload Feature --- */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">Product Images (Main + up to 3 gallery images)</label>
             <div className="flex flex-col gap-2">
@@ -270,12 +305,20 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
                     className="w-full p-2 border border-gray-300 rounded"
                     placeholder={idx === 0 ? 'Main image URL (required)' : `Gallery image ${idx}`}
                   />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={e => handleFileUpload(e, idx)}
+                    className="block"
+                  />
                   {images[idx] && (
                     <button type="button" onClick={() => setImages(prev => prev.filter((_, i) => i !== idx))} className="text-red-500">Remove</button>
                   )}
                 </div>
               ))}
             </div>
+            {uploading && <div className="text-sage text-sm mt-2">Uploading...</div>}
+            {uploadError && <div className="text-red-500 text-sm mt-2">{uploadError}</div>}
             {imagePreview && (
               <div className="mt-2 relative w-32 h-32">
                 <Image

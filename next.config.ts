@@ -50,6 +50,11 @@ const nextConfig = {
         hostname: 'm.media-amazon.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'uniknaturals-backend.onrender.com', // your backend host
+        pathname: '/uploads/**', // where images are served from
+      },
     ],
   },
   // Add CORS headers for video resources
