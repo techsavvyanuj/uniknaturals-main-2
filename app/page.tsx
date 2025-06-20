@@ -774,33 +774,33 @@ export default function Home() {
                 {[
                   {
                     video: 'https://abso-essentials.com/cdn/shop/videos/c/vp/2a3fecebbc114f389c414a9d6be38f31/2a3fecebbc114f389c414a9d6be38f31.HD-1080p-2.5Mbps-33768145.mp4?v=0',
-                    poster: 'https://abso-essentials.com/cdn/shop/files/shampoo_1_4x_f97c984e-c472-4f8c-872d-7e0763f74571.png?v=1732369710',
-                    thumb: '/images/products/rosemary shampoo.jpeg',
-                    name: 'Strengthening Shampoo',
+                    poster: 'https://m.media-amazon.com/images/I/61wN7w-cUvL._SX679_.jpg',
+                    thumb: 'https://m.media-amazon.com/images/I/61wN7w-cUvL._SX679_.jpg',
+                    name: 'Unik naturals shampoo',
                     desc: 'Tames frizz & strengthens hair',
                     link: '/products/strengthening-shampoo'
                   },
                   {
                     video: 'https://abso-essentials.com/cdn/shop/videos/c/vp/878ccfa816e0483aa05c60a273b566a2/878ccfa816e0483aa05c60a273b566a2.HD-1080p-7.2Mbps-44790003.mp4?v=0',
-                    poster: 'https://abso-essentials.com/cdn/shop/files/Artboard_1_4x_66b3460b-4ef8-4944-b011-09b93f15b0ed.png?v=1732274383',
-                    thumb: '/images/products/rosewater.jpeg',
-                    name: 'Barrier Repair Moisturizer',
+                    poster: 'https://m.media-amazon.com/images/I/61AuzU0VZFL._AC_UL640_FMwebp_QL65_.jpg',
+                    thumb: 'https://m.media-amazon.com/images/I/61AuzU0VZFL._SX679_.jpg',
+                    name: 'Hydrating Aloe Vera Gel',
                     desc: 'Ultra hydrating',
                     link: '/products/barrier-repair-moisturizer'
                   },
                   {
                     video: 'https://abso-essentials.com/cdn/shop/videos/c/vp/878ccfa816e0483aa05c60a273b566a2/878ccfa816e0483aa05c60a273b566a2.HD-1080p-7.2Mbps-44790003.mp4?v=0',
-                    poster: 'https://abso-essentials.com/cdn/shop/files/bodywash_4x_2634efb5-8a92-4bf4-8a54-0e54cfca5b63.png?v=1732365058',
-                    thumb: '/images/products/soaps.jpeg',
-                    name: 'Hydrating Bodywash',
+                    poster: 'https://m.media-amazon.com/images/I/71Jiu3sbF1L._SX679_.jpg',
+                    thumb: 'https://m.media-amazon.com/images/I/71Jiu3sbF1L._SX679_.jpg',
+                    name: 'Soothing Rose Soap',
                     desc: 'Reinforces skin barrier',
                     link: '/products/hydrating-bodywash'
                   },
                   {
                     video: 'https://abso-essentials.com/cdn/shop/videos/c/vp/ac950bac49414d7eaec094fdb5008fce/ac950bac49414d7eaec094fdb5008fce.HD-720p-1.6Mbps-33768274.mp4?v=0',
-                    poster: 'https://abso-essentials.com/cdn/shop/files/shower_combo_4x_8a72d7c0-6ca0-49cc-ad5e-d5cf191feb46.png?v=1743841891',
-                    thumb: '/images/products/aloevera gel.jpeg',
-                    name: 'Hair Care Combo',
+                    poster: 'https://m.media-amazon.com/images/I/51YWJf5NvwL._AC_UL640_FMwebp_QL65_.jpg',
+                    thumb: 'https://m.media-amazon.com/images/I/51YWJf5NvwL._AC_UL640_FMwebp_QL65_.jpg',
+                    name: 'Hair Gel Mask',
                     desc: 'Complete hair care system',
                     link: '/products/hair-care-combo'
                   }

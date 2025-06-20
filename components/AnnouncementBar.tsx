@@ -4,10 +4,13 @@ import { useState, useEffect } from 'react';
 
 // Announcement messages (similar to ABSO Essentials)
 const announcements = [
-  "💥10% discount for first order -CODE 'NEW10'💥",
-  "🎊extra 5% off on all prepaid orders🎊",
-  "🛒Free shipping on orders over ₹349🛒",
-  "🥳 Buy 2 Get 3rd Free! 🥳"
+  "Uniknaturals",
+  "Uniknaturals",
+  "Uniknaturals",
+  "Unik naturals",
+  "Unik naturals",
+  "Unik naturals",
+  "Unik naturals"
 ];
 
 export default function AnnouncementBar() {
