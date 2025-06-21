@@ -215,7 +215,7 @@ export default function CartPage() {
 											/>
 											<button
 												onClick={applyCoupon}
-												className="bg-sage text-white px-2 py-1 rounded-r-md hover:bg-sage/80 transition-all text-sm md:text-base min-w-[80px] md:min-w-[50px]"
+												className="bg-sage text-white px-2 py-1 rounded-r-md hover:bg-sage/80 transition-all text-sm md:text-base min-w-[50px] md:min-w-[20px]"
 											>
 												Apply
 											</button>

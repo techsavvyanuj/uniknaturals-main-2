@@ -212,9 +212,9 @@ export default function Header() {
                         Combos
                       </Link>
                     </li>
-                    <li className="pt-1">
-                      <div className="block text-gray-800 hover:text-gray-600 font-medium transition-colors duration-300 py-2 px-3 border-b border-gray-100 bg-gray-50 rounded hover:bg-gray-100">Shop By Concern</div>
-                      <ul className="pl-0 space-y-2 py-1">
+                    {/* <li className="pt-1"> */}
+                      {/* <div className="block text-gray-800 hover:text-gray-600 font-medium transition-colors duration-300 py-2 px-3 border-b border-gray-100 bg-gray-50 rounded hover:bg-gray-100">Shop By Concern</div> */}
+                      {/* <ul className="pl-0 space-y-2 py-1">
                         <li>
                           <Link href="/concern/damaged-hair" onClick={() => setIsMenuOpen(false)} className="block text-sm text-#6b705c hover:text-#6b705c transition-colors duration-300 text-left pl-3 py-1.5 hover:bg-#6b705c rounded">
                             Damaged Hair
@@ -240,8 +240,8 @@ export default function Header() {
                             Body Acne and Rashes
                           </Link>
                         </li>
-                      </ul>
-                    </li>
+                      </ul> */}
+                    {/* </li> */}
                   </ul>
                 </nav>
               </div>
