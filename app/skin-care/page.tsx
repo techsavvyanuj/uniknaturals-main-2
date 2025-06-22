@@ -40,7 +40,7 @@ export default function SkinCarePage() {
       <main>
         {/* Hero Banner */}
         <HeroBanner 
-          imageSrc="https://abso-essentials.com/cdn/shop/files/Laptop_size.png?v=1746350497&width=3000"
+          imageSrc="/images/products/unik second.jpeg"
           imageAlt="Skin Care Collection"
           title=""
           subtitle=""

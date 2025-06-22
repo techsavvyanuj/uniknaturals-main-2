@@ -57,7 +57,7 @@ export default function ShopByConcernPage() {
       <main>
         {/* Hero Banner */}
         <HeroBanner 
-          imageSrc="https://abso-essentials.com/cdn/shop/files/Desktop_Banner_2.jpg?v=1744708229"
+          imageSrc="/images/products/unik second.jpeg"
           imageAlt="Shop By Concern"
           title="Shop By Concern"
           subtitle="Solutions targeted to your specific needs"
