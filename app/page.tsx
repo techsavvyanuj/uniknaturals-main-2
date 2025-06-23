@@ -513,8 +513,8 @@ export default function Home() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-medium mb-2">Ethically Made</h3>
-                  <p className="text-primary">Cruelty-free products that are never tested on animals and responsibly sourced.</p>
+                  <h3 className="text-xl font-medium mb-2">Dermatologically Tested</h3>
+                  <p className="text-primary">Dermatologically tested to ensure they are safe, non-irritating, and suitable for all skins.</p>
                 </div>
                 
                 <div className="w-64 bg-white/70 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 text-center animate-slideUp delay-400">
@@ -526,8 +526,8 @@ export default function Home() {
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-medium mb-2">Sustainable Packaging</h3>
-                  <p className="text-primary">Eco-friendly packaging that minimizes waste and environmental impact.</p>
+                  <h3 className="text-xl font-medium mb-2">Paraben Free</h3>
+                  <p className="text-primary">our products are completely paraben-free — free from harsh preservatives.</p>
                 </div>
               </div>
             </div>
