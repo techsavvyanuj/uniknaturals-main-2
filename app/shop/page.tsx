@@ -10,9 +10,9 @@ const categories = [
   { id: 'all', name: 'All Products' },
   { id: 'hair', name: 'Hair Care' },
   { id: 'skin', name: 'Skin Care' },
-  { id: 'body', name: 'Body Care' },
+  // { id: 'body', name: 'Body Care' },
   { id: 'combo', name: 'Combos' },
-  { id: 'accessories', name: 'Accessories' }
+  // { id: 'accessories', name: 'Accessories' }
 ];
 
 export default function Shop() {
