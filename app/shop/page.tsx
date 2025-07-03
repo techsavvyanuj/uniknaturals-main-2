@@ -8,11 +8,9 @@ import { fetchProducts, Product } from '../api/productsApi';
 
 const categories = [
   { id: 'all', name: 'All Products' },
-  { id: 'hair', name: 'Hair Care' },
-  { id: 'skin', name: 'Skin Care' },
-  // { id: 'body', name: 'Body Care' },
-  { id: 'combo', name: 'Combos' },
-  // { id: 'accessories', name: 'Accessories' }
+  { id: 'Hair Care', name: 'Hair Care' },
+  { id: 'Skin Care', name: 'Skin Care' },
+  { id: 'Combos', name: 'Combos' },
 ];
 
 export default function Shop() {
@@ -54,7 +52,7 @@ export default function Shop() {
     <>
       <Header />
       
-      <div className="container py-12">
+      <div className="container py-12 pt-32 md:pt-36">
         <h1 className="text-3xl font-bold mb-8 text-center">Shop All Products</h1>
         
         {/* Filters */}
