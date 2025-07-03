@@ -471,15 +471,15 @@ export default function Home() {
                 <div className="w-64 bg-white/70 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 text-center animate-slideUp delay-300">
                   <div className="relative mx-auto w-48 h-48 mb-6 hover:scale-105 transition-transform duration-300">
                     <Image 
-                      src="https://abso-essentials.com/cdn/shop/files/5.png?v=1725436593&width=360"
+                      src="https://abso-essentials.com/cdn/shop/files/4.png?v=1725436593&width=360"
                       alt="Ethically Made"
                       fill
                       className="object-contain"
                     />
                   </div>
-                  <h3 className="text-xl font-medium mb-2">Dermatologically Tested</h3>
-                  <p className="text-primary">Dermatologically tested to ensure they are safe, non-irritating, and suitable for all skins.</p>
-                </div>
+                <h3 className="text-xl font-medium mb-2">Cruelty Free</h3>
+                <p className="text-primary">we never test on animals. Every product is made with love, compassion, and conscious care.</p>
+              </div>
                 
                 <div className="w-64 bg-white/70 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 text-center animate-slideUp delay-400">
                   <div className="relative mx-auto w-48 h-48 mb-6 hover:scale-105 transition-transform duration-300">
@@ -527,14 +527,14 @@ export default function Home() {
               <div className="bg-white/70 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 text-center animate-slideUp delay-300">
                 <div className="relative mx-auto w-48 h-48 mb-6 hover:scale-105 transition-transform duration-300">
                   <Image 
-                    src="https://abso-essentials.com/cdn/shop/files/5.png?v=1725436593&width=360"
+                    src="https://abso-essentials.com/cdn/shop/files/4.png?v=1725436593&width=360"
                     alt="Ethically Made"
                     fill
                     className="object-contain"
                   />
                 </div>
-                <h3 className="text-xl font-medium mb-2">Dermatologically Tested</h3>
-                <p className="text-primary">Dermatologically tested to ensure they are safe, non-irritating, and suitable for all skins.</p>
+                <h3 className="text-xl font-medium mb-2">Cruelty Free</h3>
+                <p className="text-primary">we never test on animals. Every product is made with love, compassion, and conscious care.</p>
               </div>
               
               <div className="bg-white/70 rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 text-center animate-slideUp delay-400">

@@ -163,7 +163,7 @@ export default function Footer() {
             <p className="text-sm text-gray-600 mb-4 md:mb-0">
               © {new Date().getFullYear()}, Uniknaturals. All rights reserved.
             </p>
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
               <div className="h-8 w-12 bg-gray-100 flex items-center justify-center rounded border border-gray-200">
                 <span className="text-xs text-gray-600 font-medium">VISA</span>
               </div>
@@ -176,7 +176,7 @@ export default function Footer() {
               <div className="h-8 w-12 bg-gray-100 flex items-center justify-center rounded border border-gray-200">
                 <span className="text-xs text-gray-600 font-medium">PAYPAL</span>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
