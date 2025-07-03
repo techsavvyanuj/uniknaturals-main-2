@@ -883,109 +883,34 @@ export default function Home() {
           </div>
         </section>
         
-        {/* Nature Power Section */}
+        {/* Blog Section */}
         <section className="section-beige py-8 md:py-12">
           <div className="container max-w-6xl mx-auto">
-            <h2 className="text-5xl md:text-4xl font-bold text-center mb-4 animate-scaleUp text-sage">NATURE'S POWER</h2>
-            <div className="w-24 h-1 bg-sage mx-auto mb-6"></div>
-            <p className="text-lg md:text-2xl mb-8 text-center max-w-3xl mx-auto leading-relaxed animate-slideInLeft">
-              Harness the natural ingredients for healthier skin and hair.
-            </p>
-            
-            {/* Mobile horizontal scroll for small screens */}
-            <div className="md:hidden w-full overflow-x-auto pb-6 hide-scrollbar mt-6">
-              <div className="flex space-x-4 px-4 min-w-max">
-                <div className="w-80 bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp group">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image 
-                      src="https://abso-essentials.com/cdn/shop/files/Vegan-keratin_2.webp?v=1725610274&width=360"
-                      alt="Vegan Keratin"
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-medium mb-3 text-sage">Vegan Keratin</h3>
-                    <p className="text-primary leading-relaxed">A plant-based protein that strengthens and repairs hair from within, without any animal-derived ingredients.</p>
-                  </div>
-                </div>
-                
-                <div className="w-80 bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp delay-200 group">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image 
-                      src="https://abso-essentials.com/cdn/shop/files/Turmeric_2.webp?v=1725610298&width=360"
-                      alt="Turmeric Extract"
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-medium mb-3 text-sage">Turmeric Extract</h3>
-                    <p className="text-primary leading-relaxed">Rich in antioxidants and anti-inflammatory properties that help soothe skin and promote a healthy, glowing complexion.</p>
-                  </div>
-                </div>
-                
-                <div className="w-80 bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp delay-300 group">
-                  <div className="relative h-64 overflow-hidden">
-                    <Image 
-                      src="https://abso-essentials.com/cdn/shop/files/Rosemary_2.webp?v=1725610343&width=360"
-                      alt="Rosemary Extract"
-                      fill
-                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-2xl font-medium mb-3 text-sage">Rosemary Extract</h3>
-                    <p className="text-primary leading-relaxed">Stimulates hair follicles and improves circulation to the scalp, promoting healthy hair growth and preventing premature hair loss.</p>
-                  </div>
+            <h2 className="text-4xl font-bold text-center mb-6 animate-slideInRight">FROM OUR BLOG</h2>
+            <div className="w-24 h-1 bg-accent mx-auto mb-8"></div>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp">
+                <Image src="/images/products/aloevera gel.jpeg" alt="Blog 1" width={600} height={400} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">Benefits of Aloe Vera for Skin</h3>
+                  <p className="text-gray-600 mb-4">Discover how aloe vera can hydrate, soothe, and heal your skin naturally.</p>
+                  <Link href="/blog/benefits-of-aloe-vera" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
-            </div>
-            
-            {/* Grid layout for medium screens and above */}
-            <div className="hidden md:grid md:grid-cols-3 gap-10 mt-8">
-              <div className="bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp group">
-                <div className="relative h-64 overflow-hidden">
-                  <Image 
-                    src="https://abso-essentials.com/cdn/shop/files/Vegan-keratin_2.webp?v=1725610274&width=360"
-                    alt="Vegan Keratin"
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200">
+                <Image src="/images/products/rosewater.jpeg" alt="Blog 2" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
-                  <h3 className="text-2xl font-medium mb-3 text-sage">Vegan Keratin</h3>
-                  <p className="text-primary leading-relaxed">A plant-based protein that strengthens and repairs hair from within, without any animal-derived ingredients.</p>
+                  <h3 className="text-xl font-semibold mb-2">Rosewater: Nature's Toner</h3>
+                  <p className="text-gray-600 mb-4">Learn why rosewater is a must-have in your daily skincare routine.</p>
+                  <Link href="/blog/rosewater-toner" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
-              
-              <div className="bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp delay-200 group">
-                <div className="relative h-64 overflow-hidden">
-                  <Image 
-                    src="https://abso-essentials.com/cdn/shop/files/Turmeric_2.webp?v=1725610298&width=360"
-                    alt="Turmeric Extract"
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400">
+                <Image src="/images/products/soaps.jpeg" alt="Blog 3" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
-                  <h3 className="text-2xl font-medium mb-3 text-sage">Turmeric Extract</h3>
-                  <p className="text-primary leading-relaxed">Rich in antioxidants and anti-inflammatory properties that help soothe skin and promote a healthy, glowing complexion.</p>
-                </div>
-              </div>
-              
-              <div className="bg-white/70 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 animate-slideUp delay-300 group">
-                <div className="relative h-64 overflow-hidden">
-                  <Image 
-                    src="https://abso-essentials.com/cdn/shop/files/Rosemary_2.webp?v=1725610343&width=360"
-                    alt="Rosemary Extract"
-                    fill
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-medium mb-3 text-sage">Rosemary Extract</h3>
-                  <p className="text-primary leading-relaxed">Stimulates hair follicles and improves circulation to the scalp, promoting healthy hair growth and preventing premature hair loss.</p>
+                  <h3 className="text-xl font-semibold mb-2">Choosing the Right Soap</h3>
+                  <p className="text-gray-600 mb-4">Find out how to pick the best natural soap for your skin type.</p>
+                  <Link href="/blog/choosing-soap" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
             </div>
