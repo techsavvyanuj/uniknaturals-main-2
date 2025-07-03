@@ -160,7 +160,7 @@ export default function Footer() {
         
         <div className="pt-6 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-600 mb-4 md:mb-0">
+            <p className="text-sm text-gray-600 mb-12 md:mb-0">
               © {new Date().getFullYear()}, Uniknaturals. All rights reserved.
             </p>
             {/* <div className="flex space-x-4">
