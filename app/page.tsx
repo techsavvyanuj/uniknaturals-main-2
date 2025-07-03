@@ -16,50 +16,14 @@ const heroImages = [
     src: "/images/products/unik first poster.jpeg",
     alt: "UNIKNATURALS Hero Image 1"
   },
-  {
-    src: "/images/products/unik second.jpeg",
-    alt: "UNIKNATURALS Hero Image 2"
-  },
-  {
-    src: "/images/products/unik third.jpeg",
-    alt: "UNIKNATURALS Hero Image 3"
-  }
-];
-
-// Testimonials data
-const testimonials = [
-  {
-    id: '1',
-    name: 'Devansh Chauhan',
-    date: '02/23/2025',
-    rating: 5,
-    product: 'Hair Care Combo',
-    review: 'The hair remains frizz free and shiny all day'
-  },
-  {
-    id: '2',
-    name: 'Heena',
-    date: '02/14/2025',
-    rating: 5,
-    product: 'Nourishing Conditioner',
-    review: 'This conditoner is amazing it makes your hair frizz free and makes your hair look shiny.'
-  },
-  {
-    id: '3',
-    name: 'Pratik adhikari',
-    date: '02/13/2025',
-    rating: 5,
-    product: 'Nourishing Conditioner',
-    review: 'This is best conditioner and it\'s hydrate the scalp and hair'
-  },
-  {
-    id: '4',
-    name: 'roshni agarwal',
-    date: '02/11/2025',
-    rating: 5,
-    product: 'Nourishing Conditioner',
-    review: 'I ordered both conditioner and shampoo and trust me its very good. My hairs got much better. splitens got less and hair got smooth. Would recommend it to evryone.'
-  }
+  // {
+  //   src: "/images/products/unik second.jpeg",
+  //   alt: "UNIKNATURALS Hero Image 2"
+  // },
+  // {
+  //   src: "/images/products/unik third.jpeg",
+  //   alt: "UNIKNATURALS Hero Image 3"
+  // }
 ];
 
 // Hero Slideshow Component
@@ -1024,68 +988,6 @@ export default function Home() {
                   <p className="text-primary leading-relaxed">Stimulates hair follicles and improves circulation to the scalp, promoting healthy hair growth and preventing premature hair loss.</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-        
-        {/* Testimonials */}
-        <section className="section py-8 md:py-12">
-          <div className="container">
-            <h2 className="text-3xl font-bold text-center mb-3 animate-slideInLeft text-sage">Let customers speak for us</h2>
-            <p className="text-center text-gray-600 mb-8 animate-slideInRight">from 363 reviews</p>
-            
-            {/* Mobile horizontal scroll for small screens */}
-            <div className="md:hidden w-full overflow-x-auto pb-6 hide-scrollbar">
-              <div className="flex space-x-4 px-4 min-w-max">
-                {testimonials.map((testimonial, index) => (
-                  <div key={`testimonial-mobile-${testimonial.id}`} className="w-80 border border-gray-200 p-6 bg-white hover-lift animate-scaleUp" style={{animationDelay: `${index * 0.1}s`}}>
-                    <h3 className="font-medium mb-2">{testimonial.review}</h3>
-                    <div className="flex mb-2">
-                      {[...Array(5)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className={`w-4 h-4 ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path
-                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                          />
-                        </svg>
-                      ))}
-                    </div>
-                    <p className="text-gray-600 mb-4">{testimonial.name}</p>
-                    <p className="text-sm text-gray-500">{testimonial.date}</p>
-                    <p className="text-sm text-gray-700 mt-2">{testimonial.product}</p>
-                  </div>
-                ))}
-              </div>
-        </div>
-            
-            {/* Grid layout for medium screens and above */}
-            <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {testimonials.map((testimonial, index) => (
-                <div key={testimonial.id} className="border border-gray-200 p-6 bg-white hover-lift animate-scaleUp" style={{animationDelay: `${index * 0.1}s`}}>
-                  <h3 className="font-medium mb-2">{testimonial.review}</h3>
-                  <div className="flex mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`w-4 h-4 ${i < testimonial.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                        />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-4">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.date}</p>
-                  <p className="text-sm text-gray-700 mt-2">{testimonial.product}</p>
-                </div>
-              ))}
             </div>
           </div>
         </section>

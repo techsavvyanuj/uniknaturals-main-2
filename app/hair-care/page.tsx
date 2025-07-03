@@ -40,11 +40,12 @@ export default function HairCarePage() {
 			<main>
 				{/* Hero Banner */}
 				<HeroBanner
-					imageSrc="/images/products/unik second.jpeg"
+					imageSrc="/images/products/unik first poster.jpeg"
 					imageAlt="Hair Care Collection"
 					title=""
 					subtitle=""
 					height="lg"
+					boxed={true}
 				/>
 
 				{/* Products Section */}

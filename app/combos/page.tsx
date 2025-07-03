@@ -39,11 +39,12 @@ export default function CombosPage() {
       <main>
         {/* Hero Banner */}
         <HeroBanner
-          imageSrc="/images/products/unik second.jpeg"
+          imageSrc="/images/products/unik first poster.jpeg"
           imageAlt="Value Combos and Bundles"
           title=""
           subtitle=""
           height="lg"
+          boxed={true}
         />
         {/* Products Section */}
         <section className="section-beige py-12">

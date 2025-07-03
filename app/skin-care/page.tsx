@@ -40,11 +40,12 @@ export default function SkinCarePage() {
       <main>
         {/* Hero Banner */}
         <HeroBanner 
-          imageSrc="/images/products/unik second.jpeg"
+          imageSrc="/images/products/unik first poster.jpeg"
           imageAlt="Skin Care Collection"
           title=""
           subtitle=""
           height="lg"
+          boxed={true}
         />
 
         {/* Products Section */}
@@ -121,8 +122,8 @@ export default function SkinCarePage() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Sustainably Packaged</h3>
-                  <p className="text-gray-600">Eco-friendly packaging that's recyclable and minimizes environmental impact.</p>
+                  <h3 className="text-xl font-semibold mb-2">Handmade with Care</h3>
+                  <p className="text-gray-600">Each product is crafted with love, not mass-produced.</p>
                 </div>
                 
                 <div className="text-center">
