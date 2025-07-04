@@ -84,6 +84,16 @@ export default function OrderHistoryPage() {
                   )) : <div className="text-gray-500">No products found.</div>}
                 </div>
               </div>
+              {order.shiprocketShipmentId && (
+                <a
+                  href={`https://www.shiprocket.in/shipment-tracking/${order.shiprocketShipmentId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-2 px-4 py-2 bg-sage text-white rounded hover:bg-sage-dark transition"
+                >
+                  Track Order
+                </a>
+              )}
             </div>
           ))}
         </div>

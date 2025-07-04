@@ -20,6 +20,7 @@ export default function CheckoutPage() {
     city: '',
     state: '',
     name: '',
+    email: '', // <-- Add email field
     address: '',
     address2: '',
     addressType: 'home',
@@ -103,6 +104,7 @@ export default function CheckoutPage() {
         description: 'Order Payment',
         handler: async function (response: any) {
           setOrderId(response.razorpay_payment_id);
+          let shiprocketData = null;
           try {
             const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : '';
             // Fetch all products with MongoDB _id
@@ -120,6 +122,61 @@ export default function CheckoutPage() {
               } : null;
             });
             const filteredProductsForOrder = productsForOrder.filter(Boolean); // Remove nulls
+
+            // Shiprocket integration
+            try {
+              const shiprocketPayload = {
+                order_id: response.razorpay_payment_id, // or your own order ID
+                order_date: new Date().toISOString().slice(0, 10),
+                pickup_location: "Primary", // ensure this matches your Shiprocket dashboard
+                channel_id: "",
+                billing_customer_name: shipping.name,
+                billing_last_name: "",
+                billing_address: shipping.address + (shipping.address2 ? `, ${shipping.address2}` : ""),
+                billing_city: shipping.city,
+                billing_pincode: shipping.pincode,
+                billing_state: shipping.state,
+                billing_country: "India",
+                billing_email: shipping.email, // Add if available
+                billing_phone: shipping.phone,
+                order_items: items.map(item => ({
+                  name: item.name,
+                  sku: item.id, // or item.sku if available
+                  units: item.quantity,
+                  selling_price: item.price
+                })),
+                payment_method: "Prepaid",
+                shipping_charges: 0,
+                giftwrap_charges: 0,
+                transaction_charges: 0,
+                total_discount: 0,
+                sub_total: subtotal,
+                length: 10,
+                breadth: 10,
+                height: 10,
+                weight: 0.5,
+                shipping_is_billing: true, // <-- add this line
+              };
+
+              const shiprocketRes = await fetch('/api/shiprocket', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(shiprocketPayload)
+              });
+              shiprocketData = await shiprocketRes.json();
+
+              if (shiprocketRes.ok) {
+                console.log('Shiprocket order created:', shiprocketData);
+                alert('Shipping order created successfully!');
+              } else {
+                console.error('Shiprocket error:', shiprocketData);
+                alert('Order placed, but shipping creation failed. Please contact support.');
+              }
+            } catch (err) {
+              console.error('Shiprocket API error:', err);
+              alert('Order placed, but shipping creation failed. Please contact support.');
+            }
+
             await createOrder({
               products: filteredProductsForOrder,
               total,
@@ -134,6 +191,7 @@ export default function CheckoutPage() {
                 phone: shipping.phone,
               },
               paymentId: response.razorpay_payment_id,
+              shiprocketShipmentID: shiprocketData?.shipment_id ? String(shiprocketData.shipment_id) : '', // Always send as string
             }, token || undefined);
             setStep('success');
             clearCart();
@@ -180,6 +238,7 @@ export default function CheckoutPage() {
             <input name="city" value={shipping.city} onChange={handleChange} required placeholder="City" className="w-full p-2 border rounded" readOnly />
             <input name="state" value={shipping.state} onChange={handleChange} required placeholder="State" className="w-full p-2 border rounded" readOnly />
             <input name="name" value={shipping.name} onChange={handleChange} required placeholder="Full Name" className="w-full p-2 border rounded" />
+            <input name="email" value={shipping.email} onChange={handleChange} required placeholder="Email Address" className="w-full p-2 border rounded" type="email" />
             <input name="address" value={shipping.address} onChange={handleChange} required placeholder="Complete Address" className="w-full p-2 border rounded" />
             <input name="address2" value={shipping.address2} onChange={handleChange} required placeholder="House, Floor, Landmark" className="w-full p-2 border rounded" />
             <input name="phone" value={shipping.phone} onChange={handleChange} required placeholder="Mobile Number" className="w-full p-2 border rounded" maxLength={10} minLength={10} pattern="[0-9]{10}" />
