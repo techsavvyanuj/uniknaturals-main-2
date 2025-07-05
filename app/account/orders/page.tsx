@@ -43,6 +43,9 @@ export default function OrderHistoryPage() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
                   <div className="font-semibold text-lg mb-1">Order ID: {order._id}</div>
+                  {order.shiprocketOrderId && (
+                    <div className="text-sage text-sm mb-1 font-semibold">Shiprocket Order ID: {order.shiprocketOrderId}</div>
+                  )}
                   <div className="text-gray-600 text-sm mb-1">Placed on: {order.createdAt ? new Date(order.createdAt).toLocaleString() : ''}</div>
                   <div className="text-gray-600 text-sm mb-1">Status: {order.status || 'Placed'}</div>
                   <div className="text-gray-600 text-sm mb-1">Payment ID: {order.paymentId || 'N/A'}</div>
@@ -70,12 +73,18 @@ export default function OrderHistoryPage() {
                 <div className="font-medium mb-2">Products:</div>
                 <div className="divide-y divide-gray-100">
                   {order.products && order.products.length > 0 ? order.products.map((item: any, idx: number) => (
-                    <div key={item.product?._id || idx} className="flex items-center gap-4 py-3">
+                    <div key={`${item.product?._id || 'noid'}-${idx}`} className="flex items-center gap-4 py-3">
                       {item.product?.image && (
                         <Image src={item.product.image} alt={item.product.name} width={64} height={64} className="rounded object-cover border" />
                       )}
                       <div className="flex-1">
-                        <div className="font-semibold">{item.product?.name || 'Product'}</div>
+                        {item.product?.slug ? (
+                          <a href={`/products/${item.product.slug}`} className="font-semibold text-sage hover:underline" target="_blank" rel="noopener noreferrer">
+                            {item.product?.name || 'Product'}
+                          </a>
+                        ) : (
+                          <div className="font-semibold">{item.product?.name || 'Product'}</div>
+                        )}
                         <div className="text-gray-600 text-sm">Qty: {item.quantity}</div>
                         <div className="text-gray-600 text-sm">Price: ₹{item.price}</div>
                         <div className="text-gray-600 text-sm">Subtotal: ₹{item.price * item.quantity}</div>

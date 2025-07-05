@@ -10,9 +10,6 @@ import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
 	const { items, updateQuantity, removeItem, subtotal, clearCart } = useCart();
-	const [couponCode, setCouponCode] = useState('');
-	const [couponApplied, setCouponApplied] = useState(false);
-	const [discount, setDiscount] = useState(0);
 	const [orderStatus, setOrderStatus] = useState<string | null>(null);
 	const router = useRouter();
 
@@ -20,26 +17,7 @@ export default function CartPage() {
 	const shippingCost = subtotal >= 349 ? 0 : 49;
 
 	// Calculate total
-	const total = subtotal - discount + shippingCost;
-
-	// Apply coupon code
-	const applyCoupon = () => {
-		// Simple coupon logic - in a real app this would verify against a backend
-		if (couponCode.toUpperCase() === 'NEW10') {
-			const discountAmount = Math.round(subtotal * 0.1); // 10% discount
-			setDiscount(discountAmount);
-			setCouponApplied(true);
-		} else {
-			alert('Invalid coupon code');
-		}
-	};
-
-	// Remove coupon
-	const removeCoupon = () => {
-		setCouponCode('');
-		setDiscount(0);
-		setCouponApplied(false);
-	};
+	const total = subtotal + shippingCost;
 
 	// Handle checkout
 	const handleCheckout = async () => {
@@ -176,13 +154,6 @@ export default function CartPage() {
 										<span>₹{subtotal}</span>
 									</div>
 
-									{discount > 0 && (
-										<div className="flex justify-between text-accent">
-											<span>Discount</span>
-											<span>- ₹{discount}</span>
-										</div>
-									)}
-
 									<div className="flex justify-between">
 										<span className="text-gray-600">Shipping</span>
 										<span>{shippingCost === 0 ? 'Free' : `₹${shippingCost}`}</span>
@@ -200,51 +171,17 @@ export default function CartPage() {
 									</div>
 								</div>
 
-								{/* Coupon Code */}
-								{!couponApplied ? (
-									<div className="mb-6">
-										<label
-											htmlFor="coupon"
-											className="block text-sm font-medium text-gray-700 mb-1"
-										>
-											Coupon Code
-										</label>
-										<div className="flex">
-											<input
-												type="text"
-												id="coupon"
-												value={couponCode}
-												onChange={e => setCouponCode(e.target.value)}
-												placeholder="Enter code"
-												className="flex-grow border border-gray-300 rounded-l-md px-6 py-2 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent text-sm md:text-base max-w-[230px] md:min-w-[240px]"
-											/>
-											<button
-												onClick={applyCoupon}
-												className="bg-sage text-white px-2 py-1 rounded-r-md hover:bg-sage/80 transition-all text-sm md:text-base min-w-[50px] md:min-w-[20px]"
-											>
-												Apply
-											</button>
-										</div>
-										<p className="text-xs mt-1 text-gray-500">Try "NEW10" for 10% off</p>
-									</div>
-								) : (
-									<div className="mb-6 p-3 bg-cream rounded-md flex justify-between items-center">
-										<div>
-											<span className="text-sm font-medium">{couponCode.toUpperCase()}</span>
-											<p className="text-xs text-gray-500">10% discount applied</p>
-										</div>
-										<button
-											onClick={removeCoupon}
-											className="text-sm text-accent hover:underline"
-										>
-											Remove
-										</button>
-									</div>
-								)}
-
 								<button
 									className="btn w-full py-3 bg-sage text-white rounded hover:bg-sage/80 transition-all"
-									onClick={() => router.push('/cart/checkout')}
+									onClick={() => {
+										const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : '';
+										if (!token) {
+											alert('Please log in or create an account to proceed to checkout.');
+											router.push('/account');
+											return;
+										}
+										router.push('/cart/checkout');
+									}}
 								>
 									Proceed to Checkout
 								</button>

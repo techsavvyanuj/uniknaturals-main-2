@@ -83,11 +83,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/track-order" className="text-sm text-gray-600 hover:text-sage transition-colors">
-                  Track Order
-                </Link>
-              </li>
-              <li>
                 <Link href="/shop" className="text-sm text-gray-600 hover:text-sage transition-colors">
                   Shop All
                 </Link>
