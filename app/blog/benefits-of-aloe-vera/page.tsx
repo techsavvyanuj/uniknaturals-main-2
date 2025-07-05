@@ -4,7 +4,7 @@ export default function AloeVeraBlog() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 pt-32 md:pt-36">
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-sage">Benefits of Aloe Vera for Skin</h1>
-      <Image src="/images/products/aloevera gel.jpeg" alt="Aloe Vera Gel" width={800} height={400} className="w-full h-64 object-cover rounded-lg mb-6" />
+      <Image src="/images/products/aloevera gel.jpeg" alt="Aloe Vera Gel" width={800} height={400} className="w-full h-72 md:h-96 object-contain rounded-lg mb-6 bg-white p-4" priority />
       <p className="mb-4">Aloe vera is a powerhouse of hydration and healing. Its natural gel soothes sunburn, calms irritation, and deeply moisturizes the skin. Rich in vitamins, enzymes, and antioxidants, aloe vera helps repair damaged skin, reduce redness, and promote a healthy, glowing complexion.</p>
       <p className="mb-4">Use it daily as a gentle moisturizer or as a calming mask after sun exposure for best results. Our Unik Naturals Aloe Vera Gel is pure, lightweight, and suitable for all skin types.</p>
       <ul className="list-disc pl-6 mb-4">

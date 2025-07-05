@@ -4,7 +4,7 @@ export default function RosewaterBlog() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 pt-32 md:pt-36">
       <h1 className="text-3xl md:text-4xl font-bold mb-6 text-sage">Rosewater: Nature's Toner</h1>
-      <Image src="/images/products/rosewater.jpeg" alt="Rosewater" width={800} height={400} className="w-full h-64 object-cover rounded-lg mb-6" />
+      <Image src="/images/products/rosewater.jpeg" alt="Rosewater" width={800} height={400} className="w-full h-72 md:h-96 object-contain rounded-lg mb-6 bg-white p-4" priority />
       <p className="mb-4">Rosewater is a gentle, natural toner that balances your skin's pH and tightens pores. Its anti-inflammatory properties help reduce redness and soothe sensitive skin.</p>
       <p className="mb-4">Spritz rosewater after cleansing to refresh and hydrate, or use it throughout the day for a dewy, revitalized look. It’s perfect for all skin types and a must-have in your daily skincare routine.</p>
       <ul className="list-disc pl-6 mb-4">

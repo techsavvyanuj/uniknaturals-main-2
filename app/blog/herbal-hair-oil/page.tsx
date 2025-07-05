@@ -7,9 +7,10 @@ export default function HerbalHairOilBlog() {
       <Image
         src="/images/products/herbel hair oil.jpeg"
         alt="Herbal Hair Oil"
-        width={600}
+        width={800}
         height={400}
-        className="rounded mb-6"
+        className="w-full h-72 md:h-96 object-contain rounded-lg mb-6 bg-white p-4"
+        priority
       />
       <p className="mb-4">
         Our Herbal Hair Oil is a unique blend of natural herbs and essential oils designed to nourish your scalp and strengthen your hair from root to tip. Free from harsh chemicals, it helps reduce hair fall, promotes new hair growth, and keeps your scalp healthy and dandruff-free.
