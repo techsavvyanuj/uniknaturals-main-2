@@ -908,11 +908,11 @@ export default function Home() {
                 </div>
               </div>
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400">
-                <Image src="/images/products/soaps.jpeg" alt="Blog 3" width={600} height={400} className="w-full h-48 object-cover" />
+                <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">Choosing the Right Soap</h3>
-                  <p className="text-gray-600 mb-4">Find out how to pick the best natural soap for your skin type.</p>
-                  <Link href="/blog/choosing-soap" className="text-sage font-semibold underline">Read More</Link>
+                  <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>
+                  <p className="text-gray-600 mb-4">Discover the natural power of our Herbal Hair Oil, crafted with a blend of nourishing herbs and essential oils. This oil helps reduce hair fall, promotes hair growth, and keeps your scalp healthy and dandruff-free. Regular use strengthens roots, adds shine, and revitalizes dull hair without harsh chemicals.</p>
+                  <Link href="/blog/herbal-hair-oil" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
             </div>

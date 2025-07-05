@@ -26,11 +26,11 @@ export default function BlogPage() {
         </div>
         {/* Blog 3 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400">
-          <Image src="/images/products/soaps.jpeg" alt="Choosing the Right Soap" width={600} height={400} className="w-full h-48 object-cover" />
+          <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" width={600} height={400} className="w-full h-48 object-cover" />
           <div className="p-6">
-            <h2 className="text-xl font-semibold mb-2">Choosing the Right Soap</h2>
-            <p className="text-gray-600 mb-4">Natural soaps are crafted with nourishing oils and botanical extracts that cleanse without stripping your skin. When choosing a soap, look for ingredients like coconut oil, olive oil, and essential oils for gentle cleansing and hydration. Avoid harsh chemicals and artificial fragrances to keep your skin healthy and balanced. Our handmade soaps are suitable for all skin types and leave your skin feeling soft and refreshed.</p>
-            <Link href="/products/soaps" className="text-sage font-semibold underline">Shop Soaps</Link>
+            <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>
+            <p className="text-gray-600 mb-4">Discover the natural power of our Herbal Hair Oil, crafted with a blend of nourishing herbs and essential oils. This oil helps reduce hair fall, promotes hair growth, and keeps your scalp healthy and dandruff-free. Regular use strengthens roots, adds shine, and revitalizes dull hair without harsh chemicals.</p>
+            <Link href="/blog/herbal-hair-oil" className="text-sage font-semibold underline">Read More</Link>
           </div>
         </div>
       </div>
