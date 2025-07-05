@@ -103,53 +103,111 @@ export default function HairCarePage() {
 				<section className="py-16 bg-white">
 					<div className="container">
 						<div className="max-w-4xl mx-auto">
-							<h2 className="text-3xl font-bold text-center mb-12">Your Hair Care Guide</h2>
+							<h2 className="text-3xl font-bold text-center mb-12">🌿 Unik Naturals Hair Care Guide</h2>
+							<p className="text-lg text-center mb-10">Your Natural Ritual for Healthy, Nourished Hair</p>
 
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-								<div className="bg-beige p-8 rounded-lg">
-									<h3 className="text-2xl font-semibold mb-4">How to Use Our Products</h3>
-
-									<div className="space-y-4">
-										<div>
-											<h4 className="font-medium text-lg">Step 1: Cleanse</h4>
-											<p className="text-gray-700">Start with our Strengthening Shampoo to remove impurities while nourishing your scalp and hair.</p>
-										</div>
-
-										<div>
-											<h4 className="font-medium text-lg">Step 2: Condition</h4>
-											<p className="text-gray-700">Follow with our Nourishing Conditioner to hydrate, detangle, and add shine to your hair.</p>
-										</div>
-
-										<div>
-											<h4 className="font-medium text-lg">Step 3: Treat</h4>
-											<p className="text-gray-700">Apply our Hair Growth Serum to targeted areas or use our Hydrating Hair Mask once a week for deep treatment.</p>
-										</div>
-
-										<div>
-											<h4 className="font-medium text-lg">Step 4: Style</h4>
-											<p className="text-gray-700">Finish with our Anti-Frizz Hair Oil to control frizz and add a healthy shine to your hair.</p>
-										</div>
-									</div>
+							<div className="space-y-10">
+								{/* Step 1 */}
+								<div className="bg-beige p-6 rounded-lg">
+									<h3 className="text-xl font-semibold mb-2">Step 1: Scalp Oil Therapy – Nourish from the Roots</h3>
+									<p className="mb-1"><span className="font-medium">Product:</span> Herbal Hair Oil</p>
+									<p className="mb-2">💧 Enriched with Ayurvedic herbs and wood-pressed oils</p>
+									<p className="font-medium">How to Use:</p>
+									<ul className="list-disc pl-6 mb-2 text-gray-700">
+										<li>Apply generously on the scalp and massage in circular motions for 5-10 minutes.</li>
+										<li>Leave overnight or at least for 2 hours.</li>
+									</ul>
+									<p className="font-medium">Benefits:</p>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Strengthens roots</li>
+										<li>Reduces hair fall</li>
+										<li>Deeply nourishes the scalp</li>
+									</ul>
 								</div>
 
-								<div className="flex flex-col gap-6">
-									<div className="bg-beige p-6 rounded-lg">
-										<h3 className="text-xl font-semibold mb-3">Common Hair Concerns</h3>
-										<ul className="list-disc pl-5 space-y-2 text-gray-700">
-											<li><span className="font-medium">Hair Fall:</span> Try our Strengthening Shampoo and Hair Growth Serum</li>
-											<li><span className="font-medium">Dryness:</span> Our Hydrating Hair Mask and Nourishing Conditioner provide deep moisture</li>
-											<li><span className="font-medium">Frizz:</span> Control with our Anti-Frizz Hair Oil and Heat Protectant Spray</li>
-											<li><span className="font-medium">Dandruff:</span> Our Scalp Detox Treatment helps balance the scalp</li>
-										</ul>
-									</div>
+								{/* Step 2 */}
+								<div className="bg-beige p-6 rounded-lg">
+									<h3 className="text-xl font-semibold mb-2">Step 2: Gentle Cleansing – Cleanse Without Stripping Moisture</h3>
+									<p className="mb-1"><span className="font-medium">Product:</span> Herbal Shampoo</p>
+									<p className="mb-2">🌿 Infused with natural extracts, free from sulfates and parabens</p>
+									<p className="font-medium">How to Use:</p>
+									<ul className="list-disc pl-6 mb-2 text-gray-700">
+										<li>Wet your hair and apply shampoo on scalp and lengths.</li>
+										<li>Gently massage and rinse thoroughly.</li>
+										<li>Repeat if needed.</li>
+									</ul>
+									<p className="font-medium">Benefits:</p>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Cleanses gently</li>
+										<li>Maintains scalp balance</li>
+										<li>Leaves hair soft and fresh</li>
+									</ul>
+								</div>
 
-									<div className="bg-beige p-6 rounded-lg">
-										<h3 className="text-xl font-semibold mb-3">Did You Know?</h3>
-										<p className="text-gray-700">
-											All our hair care products are made with clean, naturally-derived ingredients that are gentle on your hair and the environment. 
-											We never use sulfates, parabens, silicones, or artificial colors in our formulations.
-										</p>
-									</div>
+								{/* Step 3 */}
+								<div className="bg-beige p-6 rounded-lg">
+									<h3 className="text-xl font-semibold mb-2">Step 3: Deep Conditioning – Revive and Repair</h3>
+									<p className="mb-1"><span className="font-medium">Product:</span> Hair Spa Cream</p>
+									<p className="mb-2">💆‍♀️ With natural oils and herbal extracts for deep nourishment</p>
+									<p className="font-medium">How to Use:</p>
+									<ul className="list-disc pl-6 mb-2 text-gray-700">
+										<li>After shampoo, apply on damp hair from mid-length to ends.</li>
+										<li>Leave on for 15-20 minutes.</li>
+										<li>Wrap in a warm towel for deeper penetration, then rinse.</li>
+									</ul>
+									<p className="font-medium">Benefits:</p>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Repairs damaged strands</li>
+										<li>Adds shine and softness</li>
+										<li>Controls frizz</li>
+									</ul>
+								</div>
+
+								{/* Step 4 */}
+								<div className="bg-beige p-6 rounded-lg">
+									<h3 className="text-xl font-semibold mb-2">Step 4: Herbal Rinse & Scalp Tonic – Boost Growth & Soothe</h3>
+									<p className="mb-1"><span className="font-medium">Product:</span> Rosemary Water Spray</p>
+									<p className="mb-2">🌱 Steam-distilled rosemary for daily scalp care</p>
+									<p className="font-medium">How to Use:</p>
+									<ul className="list-disc pl-6 mb-2 text-gray-700">
+										<li>Spray directly on the scalp daily, even on non-wash days.</li>
+										<li>Gently massage to boost circulation.</li>
+									</ul>
+									<p className="font-medium">Benefits:</p>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Promotes hair growth</li>
+										<li>Reduces dandruff and itchiness</li>
+										<li>Refreshes scalp</li>
+									</ul>
+								</div>
+
+								{/* Step 5 */}
+								<div className="bg-beige p-6 rounded-lg">
+									<h3 className="text-xl font-semibold mb-2">Step 5: Intensive Treatment – Strengthen & Stimulate</h3>
+									<p className="mb-1"><span className="font-medium">Product:</span> Rosemary Essential Oil</p>
+									<p className="mb-2">🌿 100% Pure and potent</p>
+									<p className="font-medium">How to Use:</p>
+									<ul className="list-disc pl-6 mb-2 text-gray-700">
+										<li>Mix a few drops with your hair oil or carrier oil.</li>
+										<li>Apply to the scalp and massage.</li>
+										<li>Use 2-3 times a week.</li>
+									</ul>
+									<p className="font-medium">Benefits:</p>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Boosts hair growth</li>
+										<li>Strengthens follicles</li>
+										<li>Fights thinning and scalp issues</li>
+									</ul>
+								</div>
+
+								{/* Tips */}
+								<div className="bg-sage/10 p-6 rounded-lg mt-8">
+									<h3 className="text-lg font-semibold mb-2">✨ Tips for Best Results:</h3>
+									<ul className="list-disc pl-6 text-gray-700">
+										<li>Avoid harsh chemical treatments or excessive heat styling.</li>
+										<li>Maintain a healthy diet rich in protein, iron, and vitamins.</li>
+										<li>Stay consistent with your hair care ritual.</li>
+									</ul>
 								</div>
 							</div>
 						</div>

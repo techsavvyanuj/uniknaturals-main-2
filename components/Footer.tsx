@@ -88,7 +88,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="https://www.amazon.in/s?k=The+Unik+Style&ref=bl_dp_s_web_0" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-sage transition-colors">
+                <a href="https://www.amazon.in/storefront?me=AIAVXLESF6FAS&ref_=ssf_share" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-sage transition-colors">
                   Buy from Amazon
                 </a>
               </li>
