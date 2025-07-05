@@ -892,8 +892,10 @@ export default function Home() {
             <div className="w-24 h-1 bg-accent mx-auto mb-8"></div>
             <div className="grid md:grid-cols-3 gap-8">
               {/* Blog 1 */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp">
-                <Image src="/images/products/aloevera gel.jpeg" alt="Blog 1" width={600} height={400} className="w-full h-48 object-cover" />
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp flex flex-col">
+                <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
+                  <Image src="/images/products/aloevera gel.jpeg" alt="Blog 1" fill priority className="object-contain" />
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Benefits of Aloe Vera for Skin</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">Discover how aloe vera can hydrate, soothe, and heal your skin naturally.</p>
@@ -901,8 +903,10 @@ export default function Home() {
                 </div>
               </div>
               {/* Blog 2 */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200">
-                <Image src="/images/products/rosewater.jpeg" alt="Blog 2" width={600} height={400} className="w-full h-48 object-cover" />
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200 flex flex-col">
+                <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
+                  <Image src="/images/products/rosewater.jpeg" alt="Blog 2" fill priority className="object-contain" />
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Rosewater: Nature's Toner</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">Learn why rosewater is a must-have in your daily skincare routine.</p>
@@ -910,8 +914,10 @@ export default function Home() {
                 </div>
               </div>
               {/* Blog 3 */}
-              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400">
-                <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" width={600} height={400} className="w-full h-48 object-cover" />
+              <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400 flex flex-col">
+                <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
+                  <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" fill priority className="object-contain" />
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>
                   <p className="text-gray-600 mb-4 line-clamp-2">Discover the natural power of our Herbal Hair Oil, crafted with a blend of nourishing herbs and essential oils.</p>

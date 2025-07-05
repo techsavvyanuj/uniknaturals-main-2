@@ -8,8 +8,8 @@ export default function BlogPage() {
       <div className="grid md:grid-cols-3 gap-10">
         {/* Blog 1 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp flex flex-col">
-          <div className="w-full h-55 bg-white flex items-center justify-center">
-            <Image src="/images/aloegel.png" alt="Benefits of Aloe Vera for Skin" width={600} height={400} className="max-h-full max-w-full object-contain" />
+          <div className="w-full min-h-[260px] max-h-[320px] bg-white flex items-center justify-center relative p-8 border-b border-gray-100">
+            <Image src="/images/aloegel.png" alt="Benefits of Aloe Vera for Skin" fill priority className="object-contain" />
           </div>
           <div className="p-6">
             <h2 className="text-xl font-semibold mb-2">Benefits of Aloe Vera for Skin</h2>
@@ -19,8 +19,8 @@ export default function BlogPage() {
         </div>
         {/* Blog 2 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200 flex flex-col">
-          <div className="w-full h-55 bg-white flex items-center justify-center">
-            <Image src="/images/rosewater.png" alt="Rosewater: Nature's Toner" width={600} height={400} className="max-h-full max-w-full object-contain" />
+          <div className="w-full min-h-[200px] max-h-[250px] bg-white flex items-center justify-center relative p-8 border-b border-gray-100">
+            <Image src="/images/rosewater.png" alt="Rosewater: Nature's Toner" fill priority className="object-contain" />
           </div>
           <div className="p-6">
             <h2 className="text-xl font-semibold mb-2">Rosewater: Nature's Toner</h2>
@@ -30,8 +30,8 @@ export default function BlogPage() {
         </div>
         {/* Blog 3 */}
         <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400 flex flex-col">
-          <div className="w-full h-55 bg-white flex items-center justify-center">
-            <Image src="/images/herbeloil.png" alt="Herbal Hair Oil" width={600} height={400} className="max-h-full max-w-full object-contain" />
+          <div className="w-full min-h-[260px] max-h-[320px] bg-white flex items-center justify-center relative p-8 border-b border-gray-100">
+            <Image src="/images/herbeloil.png" alt="Herbal Hair Oil" fill priority className="object-contain" />
           </div>
           <div className="p-6">
             <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>
