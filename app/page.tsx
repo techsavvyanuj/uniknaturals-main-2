@@ -891,27 +891,30 @@ export default function Home() {
             <h2 className="text-4xl font-bold text-center mb-6 animate-slideInRight">FROM OUR BLOG</h2>
             <div className="w-24 h-1 bg-accent mx-auto mb-8"></div>
             <div className="grid md:grid-cols-3 gap-8">
+              {/* Blog 1 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp">
                 <Image src="/images/products/aloevera gel.jpeg" alt="Blog 1" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Benefits of Aloe Vera for Skin</h3>
-                  <p className="text-gray-600 mb-4">Discover how aloe vera can hydrate, soothe, and heal your skin naturally.</p>
+                  <p className="text-gray-600 mb-4 line-clamp-2">Discover how aloe vera can hydrate, soothe, and heal your skin naturally.</p>
                   <Link href="/blog/benefits-of-aloe-vera" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
+              {/* Blog 2 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200">
                 <Image src="/images/products/rosewater.jpeg" alt="Blog 2" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Rosewater: Nature's Toner</h3>
-                  <p className="text-gray-600 mb-4">Learn why rosewater is a must-have in your daily skincare routine.</p>
+                  <p className="text-gray-600 mb-4 line-clamp-2">Learn why rosewater is a must-have in your daily skincare routine.</p>
                   <Link href="/blog/rosewater-toner" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
+              {/* Blog 3 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400">
                 <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" width={600} height={400} className="w-full h-48 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>
-                  <p className="text-gray-600 mb-4">Discover the natural power of our Herbal Hair Oil, crafted with a blend of nourishing herbs and essential oils. This oil helps reduce hair fall, promotes hair growth, and keeps your scalp healthy and dandruff-free. Regular use strengthens roots, adds shine, and revitalizes dull hair without harsh chemicals.</p>
+                  <p className="text-gray-600 mb-4 line-clamp-2">Discover the natural power of our Herbal Hair Oil, crafted with a blend of nourishing herbs and essential oils.</p>
                   <Link href="/blog/herbal-hair-oil" className="text-sage font-semibold underline">Read More</Link>
                 </div>
               </div>
