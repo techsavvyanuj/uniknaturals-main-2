@@ -65,6 +65,10 @@ export default function CartPage() {
 		}
 	};
 
+	// Helper to get full image URL
+	const backendBase = process.env.NEXT_PUBLIC_API_BASE?.replace('/api', '') || 'https://uniknaturals-backend.onrender.com';
+	const getImageUrl = (url: string) => url?.startsWith('http') ? url : `${backendBase}${url}`;
+
 	return (
 		<main className="cart-page">
 			<Header />
@@ -99,11 +103,12 @@ export default function CartPage() {
 											<div className="flex md:col-span-2 mb-4 md:mb-0">
 												<div className="w-20 h-20 relative flex-shrink-0">
 													<Image
-														src={item.image}
+														src={getImageUrl(item.image)}
 														alt={item.name}
 														width={80}
 														height={80}
 														className="object-contain"
+														unoptimized
 													/>
 												</div>
 												<div className="ml-4">

@@ -32,6 +32,10 @@ export default function ProductDetail() {
       });
   }, [slug]);
 
+  // Helper to get full image URL
+  const backendBase = process.env.NEXT_PUBLIC_API_BASE?.replace('/api', '') || 'https://uniknaturals-backend.onrender.com';
+  const getImageUrl = (url: string) => url?.startsWith('http') ? url : `${backendBase}${url}`;
+
   if (loading) {
     return (
       <div className="container py-16 text-center">
@@ -112,14 +116,15 @@ export default function ProductDetail() {
         <div>
           <div className="mb-4 aspect-square relative overflow-hidden border border-gray-200">
             <Image
-              src={product.images && product.images.length > 0 ? product.images[activeImage] : product.image}
+              src={getImageUrl(product.images && product.images.length > 0 ? product.images[activeImage] : product.image)}
               alt={product.name}
               fill
               className="object-contain bg-white cursor-pointer"
               onClick={() => {
-                setLightboxImage(product.images && product.images.length > 0 ? product.images[activeImage] : product.image);
+                setLightboxImage(getImageUrl(product.images && product.images.length > 0 ? product.images[activeImage] : product.image));
                 setLightboxOpen(true);
               }}
+              unoptimized
             />
           </div>
           {product.images && product.images.length > 1 && (
@@ -129,16 +134,17 @@ export default function ProductDetail() {
                   key={index}
                   onClick={() => {
                     setActiveImage(index + 1);
-                    setLightboxImage(image);
+                    setLightboxImage(getImageUrl(image));
                     setLightboxOpen(true);
                   }}
                   className={`aspect-square relative border ${activeImage === index + 1 ? 'border-black' : 'border-gray-200'}`}
                 >
                   <Image
-                    src={image}
+                    src={getImageUrl(image)}
                     alt={`${product.name} ${index + 2}`}
                     fill
                     className="object-contain bg-white"
+                    unoptimized
                   />
                 </button>
               ))}
@@ -241,10 +247,11 @@ export default function ProductDetail() {
             </button>
             <div className="w-full aspect-square flex items-center justify-center">
               <Image
-                src={lightboxImage}
+                src={getImageUrl(lightboxImage)}
                 alt="Zoomed product image"
                 fill
                 className="object-contain rounded-lg"
+                unoptimized
               />
             </div>
           </div>
