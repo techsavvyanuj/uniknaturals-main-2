@@ -815,15 +815,15 @@ export default function Home() {
                   video: '/videos/unikvideo.mp4  ',
                   poster: '/images/products/rose mary spray.jpeg',
                   thumb: '/images/products/rose mary spray.jpeg',
-                  name: 'Strengthening Shampoo',
+                  name: 'Rosemary Water Spray',
                   desc: 'Tames frizz & strengthens hair',
                   link: '/products/strengthening-shampoo'
                 },
                 {
                   video: '/videos/unikvideo2.mp4',
-                  poster: '/images/products/rosewater.jpeg',
-                  thumb: '/images/products/rosewater.jpeg',
-                  name: 'Barrier Repair Moisturizer',
+                  poster: '/images/products/rosemary shampoo.jpeg',
+                  thumb: '/images/products/rosemary shampoo.jpeg',
+                  name: 'Rosemary Shampoo',
                   desc: 'Ultra hydrating',
                   link: '/products/barrier-repair-moisturizer'
                 },
@@ -831,7 +831,7 @@ export default function Home() {
                   video: '/videos/unikvideo3.mp4',
                   poster: '/images/products/aloevera gel.jpeg',
                   thumb: '/images/products/aloevera gel.jpeg',
-                  name: 'Hydrating Bodywash',
+                  name: 'Aloevera Gel',
                   desc: 'Reinforces skin barrier',
                   link: '/products/hydrating-bodywash'
                 },
@@ -839,8 +839,8 @@ export default function Home() {
                   video: '/videos/unikvideo4.mp4',
                   poster: '/images/products/rosewater.jpeg',
                   thumb: '/images/products/rosewater.jpeg',
-                  name: 'Hair Care Combo',
-                  desc: 'Complete hair care system',
+                  name: 'Natural Rosewater',
+                  desc: 'For Natural Glow',
                   link: '/products/hair-care-combo'
                 }
               ].map((item, idx) => (
@@ -894,7 +894,7 @@ export default function Home() {
               {/* Blog 1 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp flex flex-col">
                 <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
-                  <Image src="/images/products/aloevera gel.jpeg" alt="Blog 1" fill priority className="object-contain" />
+                  <Image src="/videos/aloegel567.png" alt="Blog 1" fill priority className="object-contain" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Benefits of Aloe Vera for Skin</h3>
@@ -905,7 +905,7 @@ export default function Home() {
               {/* Blog 2 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-200 flex flex-col">
                 <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
-                  <Image src="/images/products/rosewater.jpeg" alt="Blog 2" fill priority className="object-contain" />
+                  <Image src="/videos/rosewater123.png" alt="Blog 2" fill priority className="object-contain" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Rosewater: Nature's Toner</h3>
@@ -916,7 +916,7 @@ export default function Home() {
               {/* Blog 3 */}
               <div className="bg-white rounded-lg shadow-md overflow-hidden animate-slideUp delay-400 flex flex-col">
                 <div className="w-full min-h-[220px] max-h-[280px] bg-white flex items-center justify-center relative p-6 border-b border-gray-100">
-                  <Image src="/images/products/herbel hair oil.jpeg" alt="Herbal Hair Oil" fill priority className="object-contain" />
+                  <Image src="/videos/herbeloil890.png" alt="Herbal Hair Oil" fill priority className="object-contain" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">Why Herbal Hair Oil is a Must for Healthy Hair</h3>

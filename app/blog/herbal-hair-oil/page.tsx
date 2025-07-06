@@ -5,7 +5,7 @@ export default function HerbalHairOilBlog() {
     <div className="max-w-2xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Why Herbal Hair Oil is a Must for Healthy Hair</h1>
       <Image
-        src="/images/products/herbel hair oil.jpeg"
+        src="/videos/herbeloil890.png"
         alt="Herbal Hair Oil"
         width={800}
         height={400}
