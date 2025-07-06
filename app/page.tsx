@@ -436,7 +436,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-4xl font-bold text-center mb-2 animate-slideInRight text-sage">OUR PROMISE</h2>
             <div className="w-24 h-1 bg-sage mx-auto mb-5"></div>
             <p className="text-lg md:text-xl mb-6 text-center max-w-3xl mx-auto leading-relaxed animate-slideInLeft delay-200">
-              Clean, effective products with <span className="font-semibold text-primary-dark">UNIK NATURALS no nasty stuff</span>. We believe in creating products that are good for you and the environment.
+              Unik Naturals is committed to clean beauty — no parabens, no sulfates, just nature finest ingredients.
             </p>
             
             {/* Mobile horizontal scroll for small screens */}
