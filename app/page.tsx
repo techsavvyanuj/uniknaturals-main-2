@@ -268,7 +268,7 @@ export default function Home() {
                   <div style={{ display: 'inline-flex', flexDirection: 'row', flexWrap: 'nowrap', gap: 16, minWidth: '100%' }}>
                     {(trendingSection || []).map((product: any, index: number) => (
                       <div
-                        key={product._id || product.id}
+                        key={(product._id || product.id || product.slug || product.name) + '-' + index}
                         style={{ minWidth: 250, maxWidth: 270, flex: '0 0 auto', display: 'inline-block', boxSizing: 'border-box', overflow: 'hidden', wordBreak: 'break-word', whiteSpace: 'normal' }}
                         className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp"
                       >
@@ -342,8 +342,8 @@ export default function Home() {
                 {/* Desktop grid for trending products with pagination */}
                 <div className="hidden md:block">
                   <div className="grid md:grid-cols-4 gap-6 mb-3">
-                    {trendingProductsToShow.map((product: any) => (
-                      <div key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp">
+                    {trendingProductsToShow.map((product: any, index: number) => (
+                      <div key={(product._id || product.id || product.slug || product.name) + '-' + index} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp">
                         <Link href={`/products/${product.slug}`}>
                           <div className="img-zoom-container mb-2 bg-white flex items-center justify-center" style={{height: '12rem'}}>
                             <Image 
@@ -565,7 +565,7 @@ export default function Home() {
                   <div style={{ display: 'inline-flex', flexDirection: 'row', flexWrap: 'nowrap', gap: 16, minWidth: '100%' }}>
                     {(moreProductsSection || []).map((product: any, index: number) => (
                       <div
-                        key={product._id || product.id}
+                        key={(product._id || product.id || product.slug || product.name) + '-' + index}
                         style={{ minWidth: 250, maxWidth: 270, flex: '0 0 auto', display: 'inline-block', boxSizing: 'border-box', overflow: 'hidden', wordBreak: 'break-word', whiteSpace: 'normal' }}
                         className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp"
                       >
@@ -639,8 +639,8 @@ export default function Home() {
                 {/* Desktop grid for more products with pagination */}
                 <div className="hidden md:block">
                   <div className="grid md:grid-cols-4 gap-6 mb-6">
-                    {moreProductsToShow.map((product: any) => (
-                      <div key={product._id || product.id} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp">
+                    {moreProductsToShow.map((product: any, index: number) => (
+                      <div key={(product._id || product.id || product.slug || product.name) + '-' + index} className="border border-gray-200 bg-white p-4 text-center hover-lift animate-slideUp">
                         <Link href={`/products/${product.slug}`}>
                           <div className="img-zoom-container mb-2 bg-white flex items-center justify-center" style={{height: '12rem'}}>
                             <Image 
@@ -769,7 +769,7 @@ export default function Home() {
                     link: '/products/rosewater.jpeg'
                   }
                 ].map((item, idx) => (
-                  <div key={idx} style={{ minWidth: 270, maxWidth: 320, flex: '0 0 auto', boxSizing: 'border-box', position: 'relative', background: '#fff', borderRadius: 12, overflow: 'hidden', border: '1px solid #e5e7eb', height: 320 }}>
+                  <div key={item.name + '-' + idx} style={{ minWidth: 270, maxWidth: 320, flex: '0 0 auto', boxSizing: 'border-box', position: 'relative', background: '#fff', borderRadius: 12, overflow: 'hidden', border: '1px solid #e5e7eb', height: 320 }}>
                     <div style={{ position: 'relative', width: '100%', height: 320, background: '#eee' }}
                       onMouseEnter={() => {
                         setPlayingIndex(idx);
@@ -844,7 +844,7 @@ export default function Home() {
                   link: '/products/hair-care-combo'
                 }
               ].map((item, idx) => (
-                <div key={idx} style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', border: '1px solid #e5e7eb', position: 'relative', height: 380 }}>
+                <div key={item.name + '-' + idx} style={{ background: '#fff', borderRadius: 12, overflow: 'hidden', border: '1px solid #e5e7eb', position: 'relative', height: 380 }}>
                   <div style={{ position: 'relative', width: '100%', height: 380, background: '#eee' }}
                     onMouseEnter={() => {
                       setPlayingIndex(idx);

@@ -14,7 +14,7 @@ export default function ShippingAndDelivery() {
         <p>We are not responsible for damage to products after delivery. All claims, if any, for shortages or damages must be reported to customer service on the day of delivery through the contact us page on the web store / website or customer forum.</p>
         <p>Also, the said shortage of goods needs to be highlighted and signed on the Proof of delivery copy and returned to the delivery person.</p>
         <p>To help fast-track solutions for cases such as damaged, incomplete / incorrect orders received, a video or picture of the unopened and opened package and contents there-in will be required.</p>
-        <p>For more help, email our Customer Service at <a href="mailto:info@uniknaturals.com" className="text-sage underline">info@uniknaturals.com</a>. Our customer service representatives are available to help you 10:00 – 18:00 IST, Monday – Sunday.</p>
+        <p>For more help, email our Customer Service at <a href="mailto:theunikstyle3@gmail.com" className="text-sage underline">theunikstyle3@gmail.com</a>. Our customer service representatives are available to help you 10:00 – 18:00 IST, Monday – Sunday.</p>
       </div>
     </div>
   );

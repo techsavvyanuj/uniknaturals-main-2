@@ -194,7 +194,7 @@ export default function ProductsManagement() {
                   <td className="py-3 px-4">
                     <div className="w-16 h-16 relative">
                       <Image 
-                        src={product.image}
+                        src={product.image || '/images/products/default.png'}
                         alt={product.name}
                         fill
                         sizes="64px"

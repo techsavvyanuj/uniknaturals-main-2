@@ -322,7 +322,7 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
             </div>
             {uploading && <div className="text-sage text-sm mt-2">Uploading...</div>}
             {uploadError && <div className="text-red-500 text-sm mt-2">{uploadError}</div>}
-            {imagePreview && (
+            {imagePreview && imagePreview !== '' && (
               <div className="mt-2 relative w-32 h-32">
                 <Image
                   src={imagePreview}

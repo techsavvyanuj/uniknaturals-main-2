@@ -197,7 +197,7 @@ export default function ImagesManagement() {
       )}
       
       {/* Full-size Image Viewer */}
-      {viewingImage && (
+      {viewingImage && viewingImage !== '' && (
         <div 
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
           onClick={() => setViewingImage(null)}
@@ -273,4 +273,4 @@ export default function ImagesManagement() {
       </div>
     </div>
   );
-} 
+}

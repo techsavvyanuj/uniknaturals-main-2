@@ -39,9 +39,6 @@ function LoginForm() {
         <p className="mt-2 text-center text-sm text-gray-600">
           Enter your credentials to access the admin panel
         </p>
-        <p className="mt-1 text-center text-xs text-gray-500">
-          (Use admin@uniknaturals.com / admin123)
-        </p>
       </div>
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
@@ -128,4 +125,4 @@ export default function AdminLogin() {
       </Suspense>
     </div>
   );
-} 
+}
