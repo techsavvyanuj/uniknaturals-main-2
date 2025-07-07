@@ -134,23 +134,20 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
     formData.append('image', file);
     try {
       // Always use backend API for uploads
-      const backendBase = process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api';
-      const uploadUrl = backendBase.replace(/\/+$/, '') + '/upload';
+      const uploadUrl = '/api/upload'; // Use new backend endpoint
       const res = await axios.post(
         uploadUrl,
         formData,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
-      const apiRoot = backendBase.replace(/\/api$/, '');
-      const relativeUrl = res.data?.url || res.data?.imageUrl || res.data?.path || res.data;
-      const imageUrl = relativeUrl.startsWith('http') ? relativeUrl : `${apiRoot}${relativeUrl}`;
-
+      // The backend returns a Cloudinary URL (e.g., https://res.cloudinary.com/...)
+      const cloudinaryUrl = res.data?.url || res.data?.imageUrl || res.data?.path || res.data;
       setImages(prev => {
         const arr = [...prev];
-        arr[idx] = imageUrl;
+        arr[idx] = cloudinaryUrl;
         return arr;
       });
-      if (idx === 0) setImagePreview(imageUrl);
+      if (idx === 0) setImagePreview(cloudinaryUrl);
     } catch (err: any) {
       setUploadError('Upload failed. Please try again.');
     } finally {
