@@ -134,7 +134,8 @@ export default function ProductForm({ initialData, onSubmit, isSubmitting }: Pro
     formData.append('image', file);
     try {
       // Always use backend API for uploads
-      const uploadUrl = '/api/upload'; // Use new backend endpoint
+      const backendBase = process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api';
+      const uploadUrl = backendBase.replace(/\/+$/, '') + '/upload';
       const res = await axios.post(
         uploadUrl,
         formData,

@@ -55,6 +55,11 @@ const nextConfig = {
         hostname: 'uniknaturals-backend.onrender.com', // your backend host
         pathname: '/uploads/**', // where images are served from
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
+      },
     ],
   },
   // Add CORS headers for video resources
