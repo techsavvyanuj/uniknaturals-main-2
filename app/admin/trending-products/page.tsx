@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "@/app/api/productsApi";
 import axios from "axios";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://uniknaturals-backend.onrender.com/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://uniknaturals.com/api";
 
 export default function TrendingProductsAdmin() {
   const [trending, setTrending] = useState<any[]>([]);

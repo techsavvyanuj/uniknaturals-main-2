@@ -82,7 +82,7 @@ export default function AccountPage() {
     const token = typeof window !== 'undefined' ? localStorage.getItem('userAuth') : null;
     try {
       await axios.put(
-        `${process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals-backend.onrender.com/api'}/users/me`,
+        `${process.env.NEXT_PUBLIC_API_BASE || 'https://uniknaturals.com/api'}/users/me`,
         { phone: editProfile.phone, address: editProfile.address },
         { headers: { Authorization: `Bearer ${token}` } }
       );
