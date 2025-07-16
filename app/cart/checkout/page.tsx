@@ -495,10 +495,21 @@ export default function CheckoutPage() {
             <div className="flex flex-col gap-4 mb-4">
               <button
                 onClick={() => { setSelectedPayment('razorpay'); handleRazorpay(); }}
-                className="bg-black text-white px-6 py-2 rounded text-lg font-semibold hover:bg-gray-900 transition"
+                className="bg-black text-white px-6 py-2 rounded text-lg font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-3"
                 disabled={loadingPayment}
               >
-                {loadingPayment && selectedPayment === 'razorpay' ? 'Loading Payment...' : `Pay Online (Razorpay)`}
+                {loadingPayment && selectedPayment === 'razorpay' ? (
+                  'Loading Payment...'
+                ) : (
+                  <>
+                    Pay Online
+                    <span className="flex items-center gap-1 ml-2">
+                      <img src="https://imgs.search.brave.com/QtexZdJ9C_EsgMNrvNLdCJDdCuSQ5Z5q3u9xKDDcL3I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzJhL2Nm/L2I2LzJhY2ZiNmZi/NDFmN2ZjYjgyYzMy/MzBhZmRlY2ZmNzE0/LmpwZw" alt="PhonePe" className="h-5 w-5 object-contain" />
+                      <img src="https://imgs.search.brave.com/Pous46AXcI4Shlnd4Q1nFHrkWtV43AUCbdaibBBS4fY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvbG9nb3MtYnJh/bmRzLWluLWNvbG9y/cy80MzYvR29vZ2xl/X1BheV9HUGF5X0xv/Z28tNTEyLnBuZw" alt="GPay" className="h-5 w-5 object-contain" />
+                      <img src="https://imgs.search.brave.com/sXySTlPgVT-cLoV9SlP0JxSibEmr1R_iC_rdl7m65mE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/cHJpbWFyeW1hcmtl/dHMuY29tL3dwLWNv/bnRlbnQvdXBsb2Fk/cy8yMDIzLzA5L1Bh/eXRtLUNpcmNsZS1M/b2dvLndlYnA" alt="Paytm" className="h-5 w-5 object-contain" />
+                    </span>
+                  </>
+                )}
               </button>
               <button
                 onClick={() => { setSelectedPayment('cod'); handleCOD(); }}
