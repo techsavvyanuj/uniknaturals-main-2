@@ -28,12 +28,6 @@ export default function HerbalHairOilBlog() {
       <p className="mb-4">
         <b>How to Use:</b> Massage a small amount of oil into your scalp and hair. Leave it on for at least an hour or overnight for best results. Wash with a mild shampoo. Use 2-3 times a week for optimal benefits.
       </p>
-      <a
-        href="/products/herbel-hair-oil"
-        className="inline-block mt-6 px-6 py-2 bg-sage text-white rounded font-semibold"
-      >
-        Shop Herbal Hair Oil
-      </a>
     </div>
   );
 }
