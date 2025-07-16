@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "@/app/api/productsApi";
 import axios from "axios";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://ec2-16-171-238-84.eu-north-1.compute.amazonaws.com/api";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://api.uniknaturals.com/api";
 
 export default function ConcernSectionAdmin() {
   const [section, setSection] = useState<any>(null);

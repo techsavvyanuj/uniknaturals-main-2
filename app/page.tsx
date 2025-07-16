@@ -175,7 +175,7 @@ export default function Home() {
 
   // Fetch trending products from backend
   useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://ec2-16-171-238-84.eu-north-1.compute.amazonaws.com/api";
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://api.uniknaturals.com/api";
     const fetchTrendingProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE}/trending-products`);
@@ -190,7 +190,7 @@ export default function Home() {
 
   // Fetch more products from backend
   useEffect(() => {
-    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://ec2-16-171-238-84.eu-north-1.compute.amazonaws.com/api";
+    const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "https://api.uniknaturals.com/api";
     const fetchMoreProducts = async () => {
       try {
         const response = await axios.get(`${API_BASE}/more-products`);
