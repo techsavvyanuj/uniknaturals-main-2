@@ -738,7 +738,7 @@ export default function Home() {
                 {[
                   {
                     video: '/videos/unikvideo.mp4',
-                    poster: 'https://m.media-amazon.com/images/I/61wN7w-cUvL._SX679_.jpg',
+                    poster: 'https://m.media-amazon.com/images/I/61sMau+jOFL._AC_UL640_FMwebp_QL65_.jpg',
                     thumb: '/images/products/rose mary spray.jpeg',
                     name: 'Rosemary Water Spray',
                     desc: 'Hyydrate & nourish hair',
@@ -746,7 +746,7 @@ export default function Home() {
                   },
                   {
                     video: '/videos/unikvideo2.mp4',
-                    poster: 'https://m.media-amazon.com/images/I/61AuzU0VZFL._AC_UL640_FMwebp_QL65_.jpg',
+                    poster: 'https://m.media-amazon.com/images/I/61L8z48vOoL._AC_UL640_FMwebp_QL65_.jpg',
                     thumb: '/images/products/rosemary shampoo.jpeg',
                     name: 'Rosemary Shampoo',
                     desc: 'Tames frizz & strengthens hair',
@@ -754,7 +754,7 @@ export default function Home() {
                   },
                   {
                     video: '/videos/unikvideo3.mp4',
-                    poster: 'https://m.media-amazon.com/images/I/71Jiu3sbF1L._SX679_.jpg',
+                    poster: 'https://m.media-amazon.com/images/I/61vKylPlmfL._AC_UL640_FMwebp_QL65_.jpg',
                     thumb: '/images/products/aloevera gel.jpeg',
                     name: 'Aloevera Gel',
                     desc: 'Reinforces skin barrier',
@@ -762,7 +762,7 @@ export default function Home() {
                   },
                   {
                     video: '/videos/unikvideo4.mp4',
-                    poster: 'https://m.media-amazon.com/images/I/51YWJf5NvwL._AC_UL640_FMwebp_QL65_.jpg',
+                    poster: 'https://m.media-amazon.com/images/I/516HD9YO77L._AC_UL640_FMwebp_QL65_.jpg',
                     thumb: '/images/products/rosewater.jpeg',
                     name: 'Pure Rosewater',
                     desc: 'Complete hair care system',
